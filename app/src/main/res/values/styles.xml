@@ -8,12 +8,24 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <!-- Button style theme. -->
-    <style name="buttons">
+    <!-- Settings purple button style theme. -->
+    <style name="SettingsPurpleButtons">
         <!-- Customize your theme here. -->
         <item name="android:textAllCaps">false</item>
         <item name="android:background">@color/button_background</item>
         <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <!-- Setting black button style theme. -->
+    <style name="SettingsBlackButtons">
+        <!-- Customize your theme here. -->
+        <item name="android:textAllCaps">false</item>
+        <item name="android:background">@color/button_background</item>
+        <item name="android:textColor">@color/black_text</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:gravity">start|center_vertical</item>
+        <item name="android:paddingStart">12dp</item>
     </style>
 
 </resources>

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@color/background">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/button_login"
+            style="@style/SettingsPurpleButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/login"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button_create_account"
+            style="@style/SettingsPurpleButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/create_account"
+            app:layout_constraintTop_toBottomOf="@id/button_login" />
+
+        <TextView
+            android:id="@+id/text_create_account_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="@string/create_accoutn_message"
+            android:textColor="@color/light_text"
+            app:layout_constraintTop_toBottomOf="@id/button_create_account" />
+
+        <TextView
+            android:id="@+id/text_photos_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:text="@string/photos"
+            android:textAllCaps="true"
+            android:textColor="@color/light_text"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_create_account_message" />
+
+        <Button
+            android:id="@+id/button_submit_photo"
+            style="@style/SettingsPurpleButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/submit_photo"
+            app:layout_constraintTop_toBottomOf="@id/text_photos_label" />
+
+        <RelativeLayout
+            android:id="@+id/button_my_photos_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            app:layout_constraintTop_toBottomOf="@id/button_submit_photo">
+
+            <Button
+                android:id="@+id/button_my_photos"
+                style="@style/SettingsBlackButtons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/my_photos" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@id/button_my_photos"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="12dp"
+                android:elevation="2dp"
+                android:src="@drawable/ic_arrow_right"
+                android:tint="@color/light_text"
+                android:contentDescription="@string/my_photos" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_terms_conditions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            app:layout_constraintTop_toBottomOf="@id/button_my_photos_layout">
+
+            <Button
+                android:id="@+id/button_terms_conditions"
+                style="@style/SettingsBlackButtons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/terms_conditions" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@id/button_terms_conditions"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="12dp"
+                android:elevation="2dp"
+                android:src="@drawable/ic_arrow_right"
+                android:tint="@color/light_text"
+                android:contentDescription="@string/terms_conditions" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_privacy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            app:layout_constraintTop_toBottomOf="@id/layout_terms_conditions">
+
+            <Button
+                android:id="@+id/button_privacy"
+                style="@style/SettingsBlackButtons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/privacy" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@id/button_privacy"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="12dp"
+                android:elevation="2dp"
+                android:src="@drawable/ic_arrow_right"
+                android:tint="@color/light_text"
+                android:contentDescription="@string/privacy"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_community_guidelines"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            app:layout_constraintTop_toBottomOf="@id/layout_privacy">
+
+            <Button
+                android:id="@+id/button_community_guidelines"
+                style="@style/SettingsBlackButtons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/community_guidelines" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@id/button_community_guidelines"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="12dp"
+                android:elevation="2dp"
+                android:src="@drawable/ic_arrow_right"
+                android:tint="@color/light_text"
+                android:contentDescription="@string/community_guidelines" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/street_art_orlando_version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/version_statement"
+            android:textColor="@color/light_text"
+            android:layout_marginTop="4dp"
+            app:layout_constraintTop_toBottomOf="@id/layout_community_guidelines"
+            android:gravity="center"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+</ScrollView>
