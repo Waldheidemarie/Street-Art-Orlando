@@ -22,6 +22,8 @@ public class SettingsFragment extends Fragment {
 
     @BindView(R.id.button_create_account)
     Button btnCreateAccount;
+    @BindView(R.id.button_update_password)
+    Button btnUpdatePassword;
 
     private static final String TAG = "SettingsFragment";
     SettingsPresenter settingsPresentor = new SettingsPresenter(this);
@@ -40,6 +42,14 @@ public class SettingsFragment extends Fragment {
            public void onClick(View v) {
                Intent createAccount = new Intent(getActivity(), CreateAccount.class);
                startActivity(createAccount);
+           }
+       });
+
+       btnUpdatePassword.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Intent updatePassword = new Intent(getActivity(), UpdatePassword.class);
+               startActivity(updatePassword);
            }
        });
 
