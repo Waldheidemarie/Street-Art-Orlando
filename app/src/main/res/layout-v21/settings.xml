@@ -13,20 +13,38 @@
         <Button
             android:id="@+id/button_login"
             style="@style/SettingsPurpleButtons"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:text="@string/login"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"/>
 
         <Button
             android:id="@+id/button_create_account"
             style="@style/SettingsPurpleButtons"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
             android:text="@string/create_account"
-            app:layout_constraintTop_toBottomOf="@id/button_login" />
+            app:layout_constraintTop_toBottomOf="@id/button_login"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+
+        <RelativeLayout
+            android:id="@+id/layout_update_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/button_login"
+            android:visibility="invisible">
+
+            <Button
+                android:id="@+id/button_update_password"
+                style="@style/SettingsBlackButtons"
+                android:text="@string/update_password" />
+
+            <ImageView
+                android:layout_alignEnd="@id/button_update_password"
+                android:contentDescription="@string/terms_conditions"
+                style="@style/SettingsRightArrow"/>
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/text_create_account_message"
@@ -53,11 +71,10 @@
         <Button
             android:id="@+id/button_submit_photo"
             style="@style/SettingsPurpleButtons"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:text="@string/submit_photo"
-            app:layout_constraintTop_toBottomOf="@id/text_photos_label" />
+            app:layout_constraintTop_toBottomOf="@id/text_photos_label"
+            app:layout_constraintLeft_toLeftOf="parent"/>
 
         <RelativeLayout
             android:id="@+id/button_my_photos_layout"
@@ -70,20 +87,12 @@
             <Button
                 android:id="@+id/button_my_photos"
                 style="@style/SettingsBlackButtons"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:text="@string/my_photos" />
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_alignEnd="@id/button_my_photos"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="12dp"
-                android:elevation="2dp"
-                android:src="@drawable/ic_arrow_right"
-                android:tint="@color/light_text"
-                android:contentDescription="@string/my_photos" />
+                android:contentDescription="@string/my_photos"
+                style="@style/SettingsRightArrow"/>
 
         </RelativeLayout>
 
@@ -97,20 +106,12 @@
             <Button
                 android:id="@+id/button_terms_conditions"
                 style="@style/SettingsBlackButtons"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:text="@string/terms_conditions" />
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_alignEnd="@id/button_terms_conditions"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="12dp"
-                android:elevation="2dp"
-                android:src="@drawable/ic_arrow_right"
-                android:tint="@color/light_text"
-                android:contentDescription="@string/terms_conditions" />
+                android:contentDescription="@string/terms_conditions"
+                style="@style/SettingsRightArrow"/>
 
         </RelativeLayout>
 
@@ -124,20 +125,12 @@
             <Button
                 android:id="@+id/button_privacy"
                 style="@style/SettingsBlackButtons"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:text="@string/privacy" />
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_alignEnd="@id/button_privacy"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="12dp"
-                android:elevation="2dp"
-                android:src="@drawable/ic_arrow_right"
-                android:tint="@color/light_text"
-                android:contentDescription="@string/privacy"/>
+                android:contentDescription="@string/privacy"
+                style="@style/SettingsRightArrow"/>
 
         </RelativeLayout>
 
@@ -151,20 +144,12 @@
             <Button
                 android:id="@+id/button_community_guidelines"
                 style="@style/SettingsBlackButtons"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:text="@string/community_guidelines" />
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_alignEnd="@id/button_community_guidelines"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="12dp"
-                android:elevation="2dp"
-                android:src="@drawable/ic_arrow_right"
-                android:tint="@color/light_text"
-                android:contentDescription="@string/community_guidelines" />
+                android:contentDescription="@string/community_guidelines"
+                style="@style/SettingsRightArrow"/>
 
         </RelativeLayout>
 
