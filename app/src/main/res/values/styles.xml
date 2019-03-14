@@ -33,7 +33,5 @@
         <!-- Customize your theme here. -->
         <item name="android:background">@color/button_background</item>
         <item name="android:padding">12dp</item>
-        <item name="android:background">@color/button_background</item>
-        <item name="android:background">@color/button_background</item>
     </style>
 </resources>
