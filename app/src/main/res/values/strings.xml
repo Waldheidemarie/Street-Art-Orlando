@@ -13,4 +13,9 @@
     <string name="terms_conditions"><![CDATA[Terms & Conditions]]></string>
     <string name="photos">photos</string>
     <string name="version_statement">Street Art orlando 1.0 (108)</string>
+    <string name="agree_with_terms_conditions"><![CDATA[Agree with Terms & Conditions]]></string>
+    <string name="email">Email</string>
+    <string name="email_confirmation">Email Confirmation</string>
+    <string name="nickname">Nickname</string>
+    <string name="password">Password</string>
 </resources>
