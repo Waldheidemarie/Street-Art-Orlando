@@ -40,4 +40,6 @@ dependencies {
     //    RecyclerView
     implementation 'com.android.support:cardview-v7:28.0.0'
     implementation 'com.android.support:recyclerview-v7:28.0.0'
+//    Google location service (for map view)
+    implementation 'com.google.android.gms:play-services-maps:16.1.0'
 }
