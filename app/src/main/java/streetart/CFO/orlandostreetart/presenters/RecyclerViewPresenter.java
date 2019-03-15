@@ -16,23 +16,21 @@ import streetart.CFO.orlandostreetart.views.ExploreFragment;
 public class RecyclerViewPresenter {
 
     private static final String TAG = "RecyclerViewPresenter";
-    private Call<GetSubmissions> call;
-    ExploreFragment view;
+    private ExploreFragment view;
 
     public RecyclerViewPresenter(ExploreFragment exploreFragment) {
         this.view = exploreFragment;
     }
 
     public void getData() {
-
         GetNetworkData service = RetroClient.getRetrofitInstance().create(GetNetworkData.class);
 
-        call = service.getSubmissions();
+        Call<GetSubmissions> call = service.getSubmissions();
         call.enqueue(new Callback<GetSubmissions>() {
             @Override
             public void onResponse(Call<GetSubmissions> call, Response<GetSubmissions> response) {
+                Log.i(TAG, "onResponse: " );
                 view.setupAdapter(response.body());
-                Log.i(TAG, "onResponse: ");
             }
 
             @Override

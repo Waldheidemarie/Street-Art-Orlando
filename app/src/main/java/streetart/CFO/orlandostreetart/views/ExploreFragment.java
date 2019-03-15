@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ public class ExploreFragment extends Fragment {
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
+    private static final String TAG = "ExploreFragment";
     RecyclerViewPresenter rvPresenter = new RecyclerViewPresenter(this);
 
     public ExploreFragment() {
@@ -41,43 +43,8 @@ public class ExploreFragment extends Fragment {
         return view;
     }
 
-    public void setupAdapter(GetSubmissions datalist){
+    public void setupAdapter(GetSubmissions data){
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        MainRecyclerviewAdapter mAdapter = new MainRecyclerviewAdapter(this, datalist);
-        recyclerView.setAdapter(mAdapter);
+        recyclerView.setAdapter(new MainRecyclerviewAdapter(this, data));
     }
-
-////    todo: delete after using API
-//    private ItemData[] dummyData() {
-//        ItemData itemsData[] = {
-//                new ItemData(R.drawable.dummy_graffiti_1),
-//                new ItemData(R.drawable.dummy_graffiti_2),
-//                new ItemData(R.drawable.dummy_graffiti_3),
-//                new ItemData(R.drawable.dummy_graffiti_4),
-//                new ItemData(R.drawable.dummy_graffiti_5),
-//                new ItemData(R.drawable.dummy_graffiti_6),
-//                new ItemData(R.drawable.dummy_graffiti_7),
-//                new ItemData(R.drawable.dummy_graffiti_8),
-//                new ItemData(R.drawable.dummy_graffiti_9),
-//                new ItemData(R.drawable.dummy_graffiti_10),
-//                new ItemData(R.drawable.dummy_graffiti_11),
-//        };
-//        return itemsData;
-//    }
-//
-//    public class ItemData {
-//        int picture;
-//
-//        public ItemData(int picture) {
-//            this.picture = picture;
-//        }
-//
-//        public int getPicture() {
-//            return picture;
-//        }
-//
-//        public void setPicture(int picture) {
-//            this.picture = picture;
-//        }
-//    }
 }

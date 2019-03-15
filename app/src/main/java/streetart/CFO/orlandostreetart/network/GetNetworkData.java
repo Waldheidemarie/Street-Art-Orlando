@@ -11,7 +11,7 @@ public interface GetNetworkData {
     @Headers({"Accept: application/json",
             "Content-Type: application/json",
     "Authorization: " + R.string.API_KEY})
-    @GET("submissions?page=1&per_page=10&status=approved")
+    @GET("submissions?status=approved")
     Call<GetSubmissions> getSubmissions();
 
 }
