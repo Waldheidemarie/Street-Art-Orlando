@@ -52,4 +52,13 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+
+    <!-- Dividing line style theme. -->
+    <style name="DividerLine">
+        <!-- Customize your theme here. -->
+        <item name="android:background">@android:color/darker_gray</item>
+        <item name="android:layout_marginStart">12dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+    </style>
 </resources>

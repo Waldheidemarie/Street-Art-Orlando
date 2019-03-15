@@ -19,4 +19,8 @@
     <string name="nickname">Nickname</string>
     <string name="password">Password</string>
     <string name="update_password">Update Password</string>
+    <string name="photo">Photo</string>
+    <string name="art_work">Art Work</string>
+    <string name="description">Description</string>
+    <string name="location">Location</string>
 </resources>
