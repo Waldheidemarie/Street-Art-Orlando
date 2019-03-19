@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
@@ -19,6 +20,16 @@ public class Details extends AppCompatActivity {
 
     @BindView(R.id.imgArtwork)
     ImageView imgArtwork;
+    @BindView(R.id.tvImageTitle)
+    TextView tvImageTitle;
+    @BindView(R.id.tvArtistName)
+    TextView tvArtistName;
+    @BindView(R.id.tvDescription)
+    TextView tvDescription;
+    @BindView(R.id.tvLocationNotes)
+    TextView tvLocationNotes;
+    @BindView(R.id.tvDescriptionLabel)
+    TextView tvDescriptionLabel;
 
     private static final String TAG = "Details";
     DetailsPresenter detailPresenter = new DetailsPresenter(this);
@@ -35,9 +46,17 @@ public class Details extends AppCompatActivity {
         detailPresenter.getPassedDetails();
     }
 
-    public void displayDetails(String photoUrl) {
+    public void displayDetails(String photoUrl, String title, String artist, String description, String locationNotes) {
+        tvImageTitle.setText(title);
+        tvArtistName.setText(artist);
+        tvDescription.setText(description);
+        tvLocationNotes.setText(locationNotes);
+
+//        Load image
         Glide.with(this)
                 .load(photoUrl)
                 .into(imgArtwork);
+
+        detailPresenter.nullDisplay(tvImageTitle,tvArtistName,tvDescription,tvLocationNotes,tvDescriptionLabel);
     }
 }

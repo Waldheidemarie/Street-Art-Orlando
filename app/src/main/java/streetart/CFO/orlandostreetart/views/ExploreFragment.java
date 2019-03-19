@@ -55,6 +55,13 @@ public class ExploreFragment extends Fragment implements MainRecyclerviewAdapter
     public void OnArtClickedDetails(int position) {
         Intent showArtDetails = new Intent(getActivity(), Details.class);
         showArtDetails.putExtra("photoUrl", artData.getSubmissions().get(position).getPhotoUrl());
+        showArtDetails.putExtra("title", artData.getSubmissions().get(position).getTitle());
+        showArtDetails.putExtra("artist", artData.getSubmissions().get(position).getArtist());
+        showArtDetails.putExtra("description", artData.getSubmissions().get(position).getDescription());
+        showArtDetails.putExtra("locationNotes", artData.getSubmissions().get(position).getLocationNote());
+        showArtDetails.putExtra("favorite", artData.getSubmissions().get(position).getFavorite());
+        showArtDetails.putExtra("latitude", artData.getSubmissions().get(position).getLatitude());
+        showArtDetails.putExtra("longitude", artData.getSubmissions().get(position).getLongitude());
         startActivity(showArtDetails);
     }
 }
