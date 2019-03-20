@@ -1,5 +1,8 @@
 package streetart.CFO.orlandostreetart.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -17,7 +20,7 @@ public class GetSubmissions {
         @Expose
         private Meta meta;
 
-        public List<Submission> getSubmissions() {
+    public List<Submission> getSubmissions() {
             return submissions;
         }
 
@@ -32,8 +35,6 @@ public class GetSubmissions {
         public void setMeta(Meta meta) {
             this.meta = meta;
         }
-
-
 
     public class Meta {
 
@@ -84,7 +85,7 @@ public class GetSubmissions {
 
     }
 
-    public class Submission {
+    public static class Submission implements Parcelable {
 
         @SerializedName("id")
         @Expose
@@ -125,6 +126,47 @@ public class GetSubmissions {
         @SerializedName("longitude")
         @Expose
         private Double longitude;
+
+        protected Submission(Parcel in) {
+            if (in.readByte() == 0) {
+                id = null;
+            } else {
+                id = in.readInt();
+            }
+            status = in.readString();
+            title = in.readString();
+            description = in.readString();
+            photoUrl = in.readString();
+            thumbUrl = in.readString();
+            tinyUrl = in.readString();
+            artist = in.readString();
+            locationNote = in.readString();
+            createdAt = in.readString();
+            byte tmpFavorite = in.readByte();
+            favorite = tmpFavorite == 0 ? null : tmpFavorite == 1;
+            if (in.readByte() == 0) {
+                latitude = null;
+            } else {
+                latitude = in.readDouble();
+            }
+            if (in.readByte() == 0) {
+                longitude = null;
+            } else {
+                longitude = in.readDouble();
+            }
+        }
+
+        public static final Creator<Submission> CREATOR = new Creator<Submission>() {
+            @Override
+            public Submission createFromParcel(Parcel in) {
+                return new Submission(in);
+            }
+
+            @Override
+            public Submission[] newArray(int size) {
+                return new Submission[size];
+            }
+        };
 
         public Integer getId() {
             return id;
@@ -230,5 +272,41 @@ public class GetSubmissions {
             this.longitude = longitude;
         }
 
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            if (id == null) {
+                dest.writeByte((byte) 0);
+            } else {
+                dest.writeByte((byte) 1);
+                dest.writeInt(id);
+            }
+            dest.writeString(status);
+            dest.writeString(title);
+            dest.writeString(description);
+            dest.writeString(photoUrl);
+            dest.writeString(thumbUrl);
+            dest.writeString(tinyUrl);
+            dest.writeString(artist);
+            dest.writeString(locationNote);
+            dest.writeString(createdAt);
+            dest.writeByte((byte) (favorite == null ? 0 : favorite ? 1 : 2));
+            if (latitude == null) {
+                dest.writeByte((byte) 0);
+            } else {
+                dest.writeByte((byte) 1);
+                dest.writeDouble(latitude);
+            }
+            if (longitude == null) {
+                dest.writeByte((byte) 0);
+            } else {
+                dest.writeByte((byte) 1);
+                dest.writeDouble(longitude);
+            }
+        }
     }
 }

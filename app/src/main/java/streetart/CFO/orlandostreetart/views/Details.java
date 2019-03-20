@@ -47,6 +47,7 @@ public class Details extends AppCompatActivity {
     }
 
     public void displayDetails(String photoUrl, String title, String artist, String description, String locationNotes) {
+//        Set text to fields
         tvImageTitle.setText(title);
         tvArtistName.setText(artist);
         tvDescription.setText(description);
@@ -57,6 +58,7 @@ public class Details extends AppCompatActivity {
                 .load(photoUrl)
                 .into(imgArtwork);
 
-        detailPresenter.nullDisplay(tvImageTitle,tvArtistName,tvDescription,tvLocationNotes,tvDescriptionLabel);
+//        Check if field is empty and set visibility to gone.
+        detailPresenter.nullDisplay(tvImageTitle, tvArtistName, tvDescription, tvLocationNotes, tvDescriptionLabel);
     }
 }
