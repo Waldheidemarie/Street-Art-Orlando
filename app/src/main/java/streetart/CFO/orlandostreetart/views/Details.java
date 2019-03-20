@@ -3,6 +3,7 @@ package streetart.CFO.orlandostreetart.views;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,6 +31,10 @@ public class Details extends AppCompatActivity {
     TextView tvLocationNotes;
     @BindView(R.id.tvDescriptionLabel)
     TextView tvDescriptionLabel;
+    @BindView(R.id.divider1)
+    View viewDivider1;
+    @BindView(R.id.divider2)
+    View viewDivider2;
 
     private static final String TAG = "Details";
     DetailsPresenter detailPresenter = new DetailsPresenter(this);
@@ -59,6 +64,7 @@ public class Details extends AppCompatActivity {
                 .into(imgArtwork);
 
 //        Check if field is empty and set visibility to gone.
-        detailPresenter.nullDisplay(tvImageTitle, tvArtistName, tvDescription, tvLocationNotes, tvDescriptionLabel);
+        detailPresenter.nullDisplay(tvImageTitle, tvArtistName, tvDescription,
+                tvLocationNotes, tvDescriptionLabel, viewDivider1, viewDivider2);
     }
 }

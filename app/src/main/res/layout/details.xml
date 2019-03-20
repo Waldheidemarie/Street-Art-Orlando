@@ -64,7 +64,8 @@
                 android:padding="12dp"
                 tools:text="Image Title" />
 
-            <View style="@style/DividerLine" />
+            <View android:id="@+id/divider1"
+                style="@style/DividerLine" />
 
             <TextView
                 android:id="@+id/tvArtistName"
@@ -73,7 +74,8 @@
                 android:padding="12dp"
                 tools:text="Artists Name" />
 
-            <View style="@style/DividerLine" />
+            <View android:id="@+id/divider2"
+                style="@style/DividerLine" />
 
             <TextView
                 android:id="@+id/tvSubmittedBy"

@@ -46,12 +46,16 @@ public class DetailsPresenter  {
         view.displayDetails(photoUrl, title, artist, description, locationNotes);
     }
 
-    public void nullDisplay(TextView tvImageTitle, TextView tvArtistName, TextView tvDescription, TextView tvLocationNotes, TextView tvDescriptionLabel){
+    public void nullDisplay(TextView tvImageTitle, TextView tvArtistName,
+                            TextView tvDescription, TextView tvLocationNotes,
+                            TextView tvDescriptionLabel, View viewDivider1, View viewDivider2){
         if (title.equals("")){
             tvImageTitle.setVisibility(View.GONE);
+            viewDivider1.setVisibility(View.GONE);
         }
         if (artist.equals("")){
             tvArtistName.setVisibility(View.GONE);
+            viewDivider2.setVisibility(View.GONE);
         }
         if (description.equals("")){
             tvDescription.setVisibility(View.GONE);
