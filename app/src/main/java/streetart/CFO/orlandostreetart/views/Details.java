@@ -25,7 +25,7 @@ import streetart.CFO.orlandostreetart.presenters.DetailsPresenter;
 /**
  * Created by Eric on 3/15/2019.
  */
-public class Details extends AppCompatActivity implements OnMapReadyCallback{
+public class Details extends AppCompatActivity{
 
     @BindView(R.id.imgArtwork)
     ImageView imgArtwork;
@@ -46,7 +46,6 @@ public class Details extends AppCompatActivity implements OnMapReadyCallback{
 
     private static final String TAG = "Details";
     DetailsPresenter detailPresenter = new DetailsPresenter(this);
-    private GoogleMap mMap;
 
     public Details() {
     }
@@ -59,7 +58,7 @@ public class Details extends AppCompatActivity implements OnMapReadyCallback{
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.mapViewFragment);
-        mapFragment.getMapAsync(this);
+        mapFragment.getMapAsync(detailPresenter);
 
         detailPresenter.getPassedDetails();
     }
@@ -81,16 +80,4 @@ public class Details extends AppCompatActivity implements OnMapReadyCallback{
                 tvLocationNotes, tvDescriptionLabel, viewDivider1, viewDivider2);
     }
 
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-        mMap.setIndoorEnabled(true);
-        UiSettings uiSettings = mMap.getUiSettings();
-        uiSettings.setZoomControlsEnabled(true);
-
-        //seattle coordinates
-        LatLng seattle = new LatLng(47.6062095, -122.3320708);
-        mMap.addMarker(new MarkerOptions().position(seattle));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(seattle, 15));
-    }
 }
