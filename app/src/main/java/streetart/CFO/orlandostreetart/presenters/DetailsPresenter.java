@@ -1,13 +1,7 @@
 package streetart.CFO.orlandostreetart.presenters;
 
-import android.content.Intent;
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import streetart.CFO.orlandostreetart.models.GetSubmissions;
 import streetart.CFO.orlandostreetart.views.Details;

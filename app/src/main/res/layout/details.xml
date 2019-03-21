@@ -29,23 +29,23 @@
             android:layout_marginEnd="8dp"
             android:contentDescription="@string/favorites"
             android:padding="12dp"
+            android:tint="@color/colorPrimary"
             app:layout_constraintBottom_toTopOf="@+id/imgArtwork"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/heart_icon_3x"
-            android:tint="@color/colorPrimary"/>
+            app:srcCompat="@drawable/heart_icon_3x" />
 
         <ImageView
             android:id="@+id/imgArtwork"
             android:layout_width="0dp"
             android:layout_height="257dp"
             android:layout_marginTop="12dp"
+            android:contentDescription="@string/art_work"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvPhotoLabel"
-            tools:srcCompat="@drawable/dummy_graffiti_1"
-            android:contentDescription="@string/art_work" />
+            tools:srcCompat="@drawable/dummy_graffiti_1" />
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -64,7 +64,8 @@
                 android:padding="12dp"
                 tools:text="Image Title" />
 
-            <View android:id="@+id/divider1"
+            <View
+                android:id="@+id/divider1"
                 style="@style/DividerLine" />
 
             <TextView
@@ -74,7 +75,8 @@
                 android:padding="12dp"
                 tools:text="Artists Name" />
 
-            <View android:id="@+id/divider2"
+            <View
+                android:id="@+id/divider2"
                 style="@style/DividerLine" />
 
             <TextView
@@ -103,8 +105,8 @@
             android:layout_marginTop="8dp"
             android:background="@color/White"
             android:padding="12dp"
-            tools:text="Description text goes here"
-            app:layout_constraintTop_toBottomOf="@+id/tvDescriptionLabel" />
+            app:layout_constraintTop_toBottomOf="@+id/tvDescriptionLabel"
+            tools:text="Description text goes here" />
 
         <TextView
             android:id="@+id/tvLocationLabel"
@@ -117,14 +119,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvDescription" />
 
-        <com.google.android.gms.maps.MapView
-            android:id="@+id/mapView"
+        <fragment
+            android:id="@+id/mapViewFragment"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="0dp"
             android:layout_height="243dp"
             android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvLocationLabel" />
+
 
         <TextView
             android:id="@+id/tvLocationNotes"
@@ -133,9 +137,9 @@
             android:layout_marginBottom="48dp"
             android:background="@color/White"
             android:padding="12dp"
-            tools:text="Location Notes"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mapView" />
+            app:layout_constraintTop_toBottomOf="@+id/mapViewFragment"
+            tools:text="Location Notes" />
 
 
     </android.support.constraint.ConstraintLayout>

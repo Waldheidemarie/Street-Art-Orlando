@@ -8,6 +8,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,7 +25,7 @@ import streetart.CFO.orlandostreetart.presenters.DetailsPresenter;
 /**
  * Created by Eric on 3/15/2019.
  */
-public class Details extends AppCompatActivity {
+public class Details extends AppCompatActivity implements OnMapReadyCallback{
 
     @BindView(R.id.imgArtwork)
     ImageView imgArtwork;
@@ -38,6 +46,7 @@ public class Details extends AppCompatActivity {
 
     private static final String TAG = "Details";
     DetailsPresenter detailPresenter = new DetailsPresenter(this);
+    private GoogleMap mMap;
 
     public Details() {
     }
@@ -47,6 +56,10 @@ public class Details extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.details);
         ButterKnife.bind(this);
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.mapViewFragment);
+        mapFragment.getMapAsync(this);
 
         detailPresenter.getPassedDetails();
     }
@@ -66,5 +79,18 @@ public class Details extends AppCompatActivity {
 //        Check if field is empty and set visibility to gone.
         detailPresenter.nullDisplay(tvImageTitle, tvArtistName, tvDescription,
                 tvLocationNotes, tvDescriptionLabel, viewDivider1, viewDivider2);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        mMap.setIndoorEnabled(true);
+        UiSettings uiSettings = mMap.getUiSettings();
+        uiSettings.setZoomControlsEnabled(true);
+
+        //seattle coordinates
+        LatLng seattle = new LatLng(47.6062095, -122.3320708);
+        mMap.addMarker(new MarkerOptions().position(seattle));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(seattle, 15));
     }
 }

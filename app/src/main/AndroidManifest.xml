@@ -3,6 +3,7 @@
     package="streetart.CFO.orlandostreetart">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/icon_1x"
@@ -10,6 +11,14 @@
         android:roundIcon="@drawable/icon_1x"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCoGqYmvn_nXvsdgk_xiMhiV3L4nEguIF0"/>
+
         <activity
             android:name=".views.MainActivity"
             android:label="@string/app_name">
@@ -22,6 +31,7 @@
         <activity android:name=".views.CreateAccount" />
         <activity android:name=".views.UpdatePassword" />
         <activity android:name=".views.Details" />
+        <activity android:name=".views.GoogleMapView" />
     </application>
 
 </manifest>
