@@ -1,4 +1,4 @@
-package streetart.CFO.orlandostreetart.views;
+package streetart.CFO.orlandostreetart.views.FragmentViews;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +13,9 @@ import android.widget.Button;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import streetart.CFO.orlandostreetart.R;
-import streetart.CFO.orlandostreetart.presenters.SettingsPresenter;
+import streetart.CFO.orlandostreetart.presenters.FragmentPresenters.SettingsPresenter;
+import streetart.CFO.orlandostreetart.views.CreateAccount;
+import streetart.CFO.orlandostreetart.views.UpdatePassword;
 
 /**
  * Created by Eric on 3/13/2019.

@@ -1,16 +1,14 @@
-package streetart.CFO.orlandostreetart.views;
+package streetart.CFO.orlandostreetart.views.FragmentViews;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import streetart.CFO.orlandostreetart.R;
-import streetart.CFO.orlandostreetart.presenters.MainPresenter;
+import streetart.CFO.orlandostreetart.presenters.FragmentPresenters.MainPresenter;
 
 public class MainActivity extends AppCompatActivity {
 

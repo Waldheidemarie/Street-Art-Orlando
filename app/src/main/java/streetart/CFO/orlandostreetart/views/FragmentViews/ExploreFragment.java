@@ -1,6 +1,5 @@
-package streetart.CFO.orlandostreetart.views;
+package streetart.CFO.orlandostreetart.views.FragmentViews;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,7 +16,8 @@ import butterknife.ButterKnife;
 import streetart.CFO.orlandostreetart.R;
 import streetart.CFO.orlandostreetart.adapters.MainRecyclerviewAdapter;
 import streetart.CFO.orlandostreetart.models.GetSubmissions;
-import streetart.CFO.orlandostreetart.presenters.RecyclerViewPresenter;
+import streetart.CFO.orlandostreetart.presenters.FragmentPresenters.ExplorePresenter;
+import streetart.CFO.orlandostreetart.views.Details;
 
 /**
  * Created by Eric on 3/13/2019.
@@ -28,7 +28,7 @@ public class ExploreFragment extends Fragment implements MainRecyclerviewAdapter
     RecyclerView recyclerView;
 
     private static final String TAG = "ExploreFragment";
-    RecyclerViewPresenter rvPresenter = new RecyclerViewPresenter(this);
+    ExplorePresenter rvPresenter = new ExplorePresenter(this);
     GetSubmissions artData;
 
     public ExploreFragment() {

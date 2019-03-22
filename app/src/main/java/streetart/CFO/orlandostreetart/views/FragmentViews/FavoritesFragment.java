@@ -1,4 +1,4 @@
-package streetart.CFO.orlandostreetart.views;
+package streetart.CFO.orlandostreetart.views.FragmentViews;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

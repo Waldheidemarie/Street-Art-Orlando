@@ -1,16 +1,15 @@
-package streetart.CFO.orlandostreetart.presenters;
+package streetart.CFO.orlandostreetart.presenters.FragmentPresenters;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.MenuItem;
 
 import streetart.CFO.orlandostreetart.R;
-import streetart.CFO.orlandostreetart.views.ExploreFragment;
-import streetart.CFO.orlandostreetart.views.FavoritesFragment;
-import streetart.CFO.orlandostreetart.views.SettingsFragment;
+import streetart.CFO.orlandostreetart.views.FragmentViews.ExploreFragment;
+import streetart.CFO.orlandostreetart.views.FragmentViews.FavoritesFragment;
+import streetart.CFO.orlandostreetart.views.FragmentViews.SettingsFragment;
 
 /**
  * Created by Eric on 3/13/2019.

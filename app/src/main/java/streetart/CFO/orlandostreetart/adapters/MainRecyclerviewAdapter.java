@@ -1,6 +1,5 @@
 package streetart.CFO.orlandostreetart.adapters;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,7 +13,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import streetart.CFO.orlandostreetart.R;
 import streetart.CFO.orlandostreetart.models.GetSubmissions;
-import streetart.CFO.orlandostreetart.views.ExploreFragment;
+import streetart.CFO.orlandostreetart.views.FragmentViews.ExploreFragment;
 
 /**
  * Created by Eric on 3/14/2019.

@@ -21,10 +21,8 @@ public interface GetNetworkData {
     @GET("submissions?status=approved")
     Call<GetSubmissions> getSubmissions();
 
-
-    @Headers({"Accept: application/json",
-            "Content-Type: application/json"})
-    @POST("authenticate")
+    @FormUrlEncoded
+    @POST("users/register")
     Call<PostRegister> postUserRegister(@Body PostRegister postRegister);
 
     @FormUrlEncoded

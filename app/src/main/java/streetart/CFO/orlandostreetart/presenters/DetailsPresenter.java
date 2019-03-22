@@ -53,19 +53,19 @@ public class DetailsPresenter implements OnMapReadyCallback {
     public void nullDisplay(TextView tvImageTitle, TextView tvArtistName,
                             TextView tvDescription, TextView tvLocationNotes,
                             TextView tvDescriptionLabel, View viewDivider1, View viewDivider2){
-        if (title.equals("")){
+        if (title == null || title.equals("")){
             tvImageTitle.setVisibility(View.GONE);
             viewDivider1.setVisibility(View.GONE);
         }
-        if (artist.equals("")){
+        if (artist == null || artist.equals("")){
             tvArtistName.setVisibility(View.GONE);
             viewDivider2.setVisibility(View.GONE);
         }
-        if (description.equals("")){
+        if (description == null || description.equals("")){
             tvDescription.setVisibility(View.GONE);
             tvDescriptionLabel.setVisibility(View.GONE);
         }
-        if (locationNotes.equals("")){
+        if (locationNotes == null || locationNotes.equals("")){
             tvLocationNotes.setVisibility(View.GONE);
         }
     }
