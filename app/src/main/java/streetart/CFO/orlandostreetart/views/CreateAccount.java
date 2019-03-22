@@ -45,24 +45,25 @@ public class CreateAccount extends AppCompatActivity {
     }
 
     public void postUser() {
-        PostRegister register = new PostRegister("ericdgood@yahoo.com", "password");
-
-        GetNetworkData service = RetroClient.getRetrofitInstance().create(GetNetworkData.class);
+//        todo: Post new users
+//        PostRegister register = new PostRegister("ericdgood@yahoo.com", "password");
 //
-        Call<Auth> call = service.createRegisterPost("ericdgood@yahoo.com", "password");
-        call.enqueue(new Callback<Auth>() {
-            @Override
-            public void onResponse(Call<Auth> call, Response<Auth> response) {
-                Auth postResopnse = response.body();
-                Log.i(TAG, "onResponse: " + response.code() + "\n" +
-                "auth:" + response.body().getAuthToken());
-            }
-
-            @Override
-            public void onFailure(Call<Auth> call, Throwable t) {
-                Log.i(TAG, "onFailure: ");
-            }
-        });
+//        GetNetworkData service = RetroClient.getRetrofitInstance().create(GetNetworkData.class);
+////
+//        Call<Auth> call = service.createRegisterPost("ericdgood@yahoo.com", "password");
+//        call.enqueue(new Callback<Auth>() {
+//            @Override
+//            public void onResponse(Call<Auth> call, Response<Auth> response) {
+//                Auth postResopnse = response.body();
+//                Log.i(TAG, "onResponse: " + response.code() + "\n" +
+//                "auth:" + response.body().getAuthToken());
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Auth> call, Throwable t) {
+//                Log.i(TAG, "onFailure: ");
+//            }
+//        });
     }
 
 }

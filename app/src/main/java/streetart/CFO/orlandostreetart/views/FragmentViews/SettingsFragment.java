@@ -15,6 +15,7 @@ import butterknife.ButterKnife;
 import streetart.CFO.orlandostreetart.R;
 import streetart.CFO.orlandostreetart.presenters.FragmentPresenters.SettingsPresenter;
 import streetart.CFO.orlandostreetart.views.CreateAccount;
+import streetart.CFO.orlandostreetart.views.Login;
 import streetart.CFO.orlandostreetart.views.UpdatePassword;
 
 /**
@@ -26,6 +27,8 @@ public class SettingsFragment extends Fragment {
     Button btnCreateAccount;
     @BindView(R.id.button_update_password)
     Button btnUpdatePassword;
+    @BindView(R.id.button_login)
+    Button button_login;
 
     private static final String TAG = "SettingsFragment";
     SettingsPresenter settingsPresentor = new SettingsPresenter(this);
@@ -52,6 +55,14 @@ public class SettingsFragment extends Fragment {
            public void onClick(View v) {
                Intent updatePassword = new Intent(getActivity(), UpdatePassword.class);
                startActivity(updatePassword);
+           }
+       });
+
+        button_login.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Intent login = new Intent(getActivity(), Login.class);
+               startActivity(login);
            }
        });
 
