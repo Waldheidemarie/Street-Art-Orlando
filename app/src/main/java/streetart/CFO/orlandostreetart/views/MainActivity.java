@@ -1,11 +1,11 @@
 package streetart.CFO.orlandostreetart.views;
 
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     final FragmentManager fm = getSupportFragmentManager();
-    MainPresenter presenter = new MainPresenter(this, fm);
+    MainPresenter presenter = new MainPresenter(fm);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +27,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        presenter.getFragments();
+            presenter.getFragments();
 
         navigation.setOnNavigationItemSelectedListener(presenter.mOnNavigationItemSelectedListener);
     }
-
 }

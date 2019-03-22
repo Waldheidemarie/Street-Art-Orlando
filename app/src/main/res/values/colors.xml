@@ -6,6 +6,7 @@
     <color name="background">#12754F9E</color>
     <color name="button_background">#FFFFFF</color>
     <color name="light_text">#949393</color>
+    <color name="dark_text">#383737</color>
     <color name="black">#000000</color>
     <color name="White">#FFFFFF</color>
 

@@ -37,12 +37,12 @@ public class ExploreFragment extends Fragment implements MainRecyclerviewAdapter
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.recyclerview, container, false);
-        ButterKnife.bind(this, view);
+            View view = inflater.inflate(R.layout.recyclerview, container, false);
+            ButterKnife.bind(this, view);
 
-        rvPresenter.getData();
+            rvPresenter.getData();
 
-        return view;
+            return view;
     }
 
     public void setupAdapter(GetSubmissions data){
