@@ -1,5 +1,7 @@
 package streetart.CFO.orlandostreetart.views.FragmentViews;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,10 +29,13 @@ public class ExploreFragment extends Fragment implements MainRecyclerviewAdapter
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+    @BindView(R.id.pbProgress)
+    ProgressBar pbProgress;
 
     private static final String TAG = "ExploreFragment";
     ExplorePresenter rvPresenter = new ExplorePresenter(this);
     GetSubmissions artData;
+    ProgressDialog progressDialog;
 
     public ExploreFragment() {
     }
@@ -37,15 +43,16 @@ public class ExploreFragment extends Fragment implements MainRecyclerviewAdapter
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            View view = inflater.inflate(R.layout.recyclerview, container, false);
-            ButterKnife.bind(this, view);
+        View view = inflater.inflate(R.layout.recyclerview, container, false);
+        ButterKnife.bind(this, view);
 
-            rvPresenter.getData();
+        rvPresenter.getData();
 
-            return view;
+        return view;
     }
 
-    public void setupAdapter(GetSubmissions data){
+    public void setupAdapter(GetSubmissions data) {
+        pbProgress.setVisibility(View.GONE);
         this.artData = data;
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         recyclerView.setAdapter(new MainRecyclerviewAdapter(this, this, data));

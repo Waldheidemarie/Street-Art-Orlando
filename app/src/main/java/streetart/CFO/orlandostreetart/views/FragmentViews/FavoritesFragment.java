@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -20,6 +21,8 @@ public class FavoritesFragment extends Fragment {
 
     @BindView(R.id.tvLoginRequired)
     TextView tvLoginRequired;
+    @BindView(R.id.pbProgress)
+    ProgressBar pbProgress;
 
     public FavoritesFragment() {
     }
@@ -31,6 +34,9 @@ public class FavoritesFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         tvLoginRequired.setVisibility(View.VISIBLE);
+
+//        todo: hide progressbar when favorites load
+        pbProgress.setVisibility(View.GONE);
 
         return view;
     }
