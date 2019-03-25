@@ -3,7 +3,6 @@ package streetart.CFO.orlandostreetart.views;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +16,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import streetart.CFO.orlandostreetart.R;
 import streetart.CFO.orlandostreetart.models.Auth;
-import streetart.CFO.orlandostreetart.models.PostRegister;
 import streetart.CFO.orlandostreetart.network.GetNetworkData;
 import streetart.CFO.orlandostreetart.network.RetroClient;
 
@@ -52,11 +50,12 @@ public class Login extends AppCompatActivity {
     public void postLogin(String email, String password) {
         GetNetworkData service = RetroClient.getRetrofitInstance().create(GetNetworkData.class);
 //
-        Call<Auth> call = service.createRegisterPost(email, password);
+        Call<Auth> call = service.getUserAuthKey(email, password);
         call.enqueue(new Callback<Auth>() {
             @Override
             public void onResponse(Call<Auth> call, Response<Auth> response) {
-                Log.i(TAG, "onResponse: Auth: " + response.body().getAuthToken());
+//                assert response.body() != null;
+//                Log.i(TAG, "onResponse: Auth: " + response.body().getAuthToken());
 
                 Toast.makeText(Login.this, "Logged in", Toast.LENGTH_SHORT).show();
             }

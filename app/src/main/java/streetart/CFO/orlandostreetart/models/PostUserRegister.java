@@ -5,16 +5,27 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by Eric on 3/21/2019.
  */
-public class PostRegister {
+public class PostUserRegister {
 
     @SerializedName("body")
+    private String name;
+
     private String email;
 
     private String password;
 
-    public PostRegister(String email, String password) {
+    public PostUserRegister(String name, String email, String password) {
+        this.name = name;
         this.email = email;
         this.password = password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {

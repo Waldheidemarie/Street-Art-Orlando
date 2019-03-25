@@ -8,10 +8,9 @@ import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import streetart.CFO.orlandostreetart.BuildConfig;
-import streetart.CFO.orlandostreetart.R;
 import streetart.CFO.orlandostreetart.models.Auth;
 import streetart.CFO.orlandostreetart.models.GetSubmissions;
-import streetart.CFO.orlandostreetart.models.PostRegister;
+import streetart.CFO.orlandostreetart.models.PostUserRegister;
 
 public interface GetNetworkData {
 
@@ -23,11 +22,11 @@ public interface GetNetworkData {
 
     @FormUrlEncoded
     @POST("users/register")
-    Call<PostRegister> postUserRegister(@Body PostRegister postRegister);
+    Call<PostUserRegister> postUserRegister(@Body PostUserRegister postRegister);
 
     @FormUrlEncoded
     @POST("authenticate")
-    Call<Auth> createRegisterPost(
+    Call<Auth> getUserAuthKey(
             @Field("email") String email,
             @Field("password") String password
     );
