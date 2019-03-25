@@ -47,7 +47,7 @@ public class CreateAccount extends AppCompatActivity {
                 if (presenter.checkForEmpty(etEmail,etEmailConfirm,etNickName,etPassword) &&
                 presenter.checkEmails(etEmail, etEmailConfirm)) {
 //              Do this if all fields are filled and emails are valid
-                    Toast.makeText(CreateAccount.this, "Post user", Toast.LENGTH_SHORT).show();
+                    presenter.postRegisterUser();
                 }
             }
         });

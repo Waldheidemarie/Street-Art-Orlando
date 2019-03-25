@@ -20,7 +20,6 @@ public interface GetNetworkData {
     @GET("submissions?status=approved")
     Call<GetSubmissions> getSubmissions();
 
-    @FormUrlEncoded
     @POST("users/register")
     Call<PostUserRegister> postUserRegister(@Body PostUserRegister postRegister);
 
