@@ -7,17 +7,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import streetart.CFO.orlandostreetart.PreferenceManager;
 import streetart.CFO.orlandostreetart.R;
 import streetart.CFO.orlandostreetart.models.Auth;
-import streetart.CFO.orlandostreetart.network.GetNetworkData;
-import streetart.CFO.orlandostreetart.network.RetroClient;
+
+import static streetart.CFO.orlandostreetart.Constants.SERVICE;
 
 /**
  * Created by Eric on 3/21/2019.
@@ -32,6 +32,7 @@ public class Login extends AppCompatActivity {
     Button btnLogin;
 
     private static final String TAG = "Login";
+    PreferenceManager preferenceManager = new PreferenceManager(this);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,17 +48,14 @@ public class Login extends AppCompatActivity {
         });
     }
 
-    public void postLogin(String email, String password) {
-        GetNetworkData service = RetroClient.getRetrofitInstance().create(GetNetworkData.class);
-//
-        Call<Auth> call = service.getUserAuthKey(email, password);
+    public void postLogin(String email, String password) {//
+        Call<Auth> call = SERVICE.getUserAuthKey(email, password);
         call.enqueue(new Callback<Auth>() {
             @Override
             public void onResponse(Call<Auth> call, Response<Auth> response) {
-//                assert response.body() != null;
-//                Log.i(TAG, "onResponse: Auth: " + response.body().getAuthToken());
-
-                Toast.makeText(Login.this, "Logged in", Toast.LENGTH_SHORT).show();
+                assert response.body() != null;
+                if (!response.body().getAuthToken().equals(""))
+            preferenceManager.saveAuthBoolean(true);
             }
 
             @Override
