@@ -1,5 +1,8 @@
 package streetart.CFO.orlandostreetart.views;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +19,8 @@ import retrofit2.Response;
 import streetart.CFO.orlandostreetart.PreferenceManager;
 import streetart.CFO.orlandostreetart.R;
 import streetart.CFO.orlandostreetart.models.Auth;
+import streetart.CFO.orlandostreetart.views.FragmentViews.MainActivity;
+import streetart.CFO.orlandostreetart.views.FragmentViews.SettingsFragment;
 
 import static streetart.CFO.orlandostreetart.Constants.SERVICE;
 
@@ -54,8 +59,14 @@ public class Login extends AppCompatActivity {
             @Override
             public void onResponse(Call<Auth> call, Response<Auth> response) {
                 assert response.body() != null;
-                if (!response.body().getAuthToken().equals(""))
-            preferenceManager.saveAuthBoolean(true);
+                if (!response.body().getAuthToken().equals("") ||
+                response.body().getAuthToken() != null) {
+                    preferenceManager.saveAuthBoolean(true);
+                    Intent returnMain = new Intent(Login.this, MainActivity.class);
+                    startActivity(returnMain);
+                } else {
+//                    todo: show login does not match
+                }
             }
 
             @Override

@@ -1,5 +1,7 @@
 package streetart.CFO.orlandostreetart.views.FragmentViews;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,7 +49,7 @@ public class SettingsFragment extends Fragment {
 
         PreferenceManager preferenceManager = new PreferenceManager(getActivity());
         if(preferenceManager.checkUserAuth()){
-            userLoggedIn();
+            userLoggedIn(preferenceManager);
         } else {
             userLoggedOut();
         }
@@ -74,7 +77,7 @@ public class SettingsFragment extends Fragment {
         });
     }
 
-    private void userLoggedIn(){
+    private void userLoggedIn(final PreferenceManager preferenceManager){
         btnCreateAccount.setVisibility(View.INVISIBLE);
         layUpdatePassword.setVisibility(View.VISIBLE);
         btnLogInLogOut.setText(R.string.logout);
@@ -91,9 +94,29 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
 //                Log out user.
-
+                logoutAlertDialog(preferenceManager);
             }
         });
+    }
 
+    private void logoutAlertDialog(final PreferenceManager preferenceManager){
+        new AlertDialog.Builder(getActivity())
+                .setTitle("Logout")
+                .setMessage("Are you sure you want to logout?")
+
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Continue with delete operation
+                        preferenceManager.saveAuthBoolean(false);
+                        Intent returnSettings = new Intent(getActivity(), MainActivity.class);
+                        startActivity(returnSettings);
+                        Toast.makeText(getActivity(), "You are now logged out", Toast.LENGTH_SHORT).show();
+                    }
+                })
+
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                .setNegativeButton(android.R.string.no, null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 }
