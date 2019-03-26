@@ -12,9 +12,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import streetart.CFO.orlandostreetart.PreferenceManager;
+import streetart.CFO.orlandostreetart.models.APIError;
 import streetart.CFO.orlandostreetart.models.Auth;
 import streetart.CFO.orlandostreetart.models.PostUserRegister;
+import streetart.CFO.orlandostreetart.network.ErrorUtils;
 import streetart.CFO.orlandostreetart.views.CreateAccount;
+import streetart.CFO.orlandostreetart.views.Login;
 
 import static streetart.CFO.orlandostreetart.Constants.SERVICE;
 
@@ -98,12 +101,9 @@ public class CreateAccountPresenter {
                     getAuthToken();
                 } else {
 //                    Error adding new user
-                    try {
-                        Toast.makeText(createAccountView, response.errorBody().string(), Toast.LENGTH_SHORT).show();
-//                        todo: Show error message if info is already used.
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+//                    todo: show errors messages
+                    APIError error = ErrorUtils.parseError(response);
+//                    Toast.makeText(createAccountView, error, Toast.LENGTH_SHORT).show();
                 }
             }
 

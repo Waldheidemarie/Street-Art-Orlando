@@ -1,33 +1,16 @@
 package streetart.CFO.orlandostreetart.views;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
-
-import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import streetart.CFO.orlandostreetart.PreferenceManager;
 import streetart.CFO.orlandostreetart.R;
-import streetart.CFO.orlandostreetart.models.APIError;
-import streetart.CFO.orlandostreetart.models.Auth;
-import streetart.CFO.orlandostreetart.network.ErrorUtils;
-import streetart.CFO.orlandostreetart.views.FragmentViews.MainActivity;
-import streetart.CFO.orlandostreetart.views.FragmentViews.SettingsFragment;
-
-import static streetart.CFO.orlandostreetart.Constants.SERVICE;
+import streetart.CFO.orlandostreetart.presenters.LoginPresenter;
 
 /**
  * Created by Eric on 3/21/2019.
@@ -42,7 +25,7 @@ public class Login extends AppCompatActivity {
     Button btnLogin;
 
     private static final String TAG = "Login";
-    PreferenceManager preferenceManager = new PreferenceManager(this);
+    LoginPresenter loginPresenter = new LoginPresenter(this);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,31 +36,7 @@ public class Login extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                postLogin(etEmail.getText().toString(), etPassword.getText().toString());
-            }
-        });
-    }
-
-    public void postLogin(String email, String password) {//
-        Call<Auth> call = SERVICE.getUserAuthKey(email, password);
-        call.enqueue(new Callback<Auth>() {
-            @Override
-            public void onResponse(Call<Auth> call, Response<Auth> response) {
-
-                if (response.isSuccessful()) {
-                    preferenceManager.saveAuthBoolean(true);
-                    Intent returnMain = new Intent(Login.this, MainActivity.class);
-                    startActivity(returnMain);
-                } else {
-//                  Show error message if incorrect info is entered.
-                    APIError error = ErrorUtils.parseError(response);
-                    Toast.makeText(Login.this, error.error(), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Auth> call, Throwable t) {
-                Toast.makeText(Login.this, "Please check internet connection", Toast.LENGTH_SHORT).show();
+               loginPresenter.postLogin(etEmail.getText().toString(), etPassword.getText().toString());
             }
         });
     }
