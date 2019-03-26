@@ -45,6 +45,7 @@ public class CreateAccountPresenter {
         password = etPassword.getText().toString();
     }
 
+//    TODO: Check if the term and condition is true
     public Boolean checkForEmpty(EditText etEmail, EditText etEmailConfirm, EditText etNickName, EditText etPassword) {
         if (email.equals("")) {
             etEmail.setError("No email entered");

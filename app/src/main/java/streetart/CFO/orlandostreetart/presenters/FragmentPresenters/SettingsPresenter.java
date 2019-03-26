@@ -8,7 +8,7 @@ import streetart.CFO.orlandostreetart.views.FragmentViews.SettingsFragment;
 public class SettingsPresenter {
 
     private static final String TAG = "SettingsPresenter";
-    SettingsFragment settingsView;
+    private SettingsFragment settingsView;
 
     public SettingsPresenter(SettingsFragment settingsFragment) {
         this.settingsView = settingsFragment;

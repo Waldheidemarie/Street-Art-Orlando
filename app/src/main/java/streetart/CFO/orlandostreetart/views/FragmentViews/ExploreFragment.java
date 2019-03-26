@@ -35,7 +35,6 @@ public class ExploreFragment extends Fragment implements MainRecyclerviewAdapter
     private static final String TAG = "ExploreFragment";
     ExplorePresenter rvPresenter = new ExplorePresenter(this);
     GetSubmissions artData;
-    ProgressDialog progressDialog;
 
     public ExploreFragment() {
     }

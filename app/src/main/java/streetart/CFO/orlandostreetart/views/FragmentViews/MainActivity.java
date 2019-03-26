@@ -17,8 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     final FragmentManager fm = getSupportFragmentManager();
-    MainPresenter presenter = new MainPresenter(fm, this);
-
+    MainPresenter presenter = new MainPresenter(fm);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        presenter.checkUserAuth();
         presenter.getFragments();
 
         navigation.setOnNavigationItemSelectedListener(presenter.mOnNavigationItemSelectedListener);

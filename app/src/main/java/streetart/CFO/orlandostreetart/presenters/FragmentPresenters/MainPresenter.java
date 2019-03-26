@@ -28,10 +28,8 @@ public class MainPresenter {
     private final Fragment favorites = new FavoritesFragment();
     private final Fragment settings = new SettingsFragment();
     private final FragmentManager fm;
-    private Context context;
 
-    public MainPresenter(FragmentManager fm, Context context) {
-        this.context = context;
+    public MainPresenter(FragmentManager fm) {
         this.fm = fm;
     }
 
@@ -57,11 +55,5 @@ public class MainPresenter {
 
     public void getFragments(){
         fm.beginTransaction().add(R.id.main_container, explore).commit();
-    }
-
-    public void checkUserAuth(){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        boolean authToken = sharedPreferences.getBoolean(AUTHTOKEN, false);
-        Log.i(TAG, "onCreate: " + authToken);
     }
 }

@@ -15,6 +15,7 @@ public class PreferenceManager {
     private Context context;
 
     private static final String TAG = "PreferenceManager";
+//    AUTHTOKEN = TRUE (USER LOGGED IN) / FALSE = USER LOGGED OUT
 
     public PreferenceManager(Context context) {
         this.context = context;
@@ -29,14 +30,9 @@ public class PreferenceManager {
         editor.apply();
     }
 
-//    public void checkUserAuth() {
-//        if (createAccount != null) {
-//            SharedPreferences sharedPreferences = createAccount.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-//
-//            Log.i(TAG, "checkUserAuth: authToken" + sharedPreferences.getString(AUTHTOKEN, "No authToken"));
-//        } else {
-//            Log.i(TAG, "checkUserAuth: no shared prefs");
-//        }
-//    }
+    public boolean checkUserAuth(){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        return sharedPreferences.getBoolean(AUTHTOKEN, false);
+    }
 
 }
