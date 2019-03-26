@@ -10,6 +10,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,7 +21,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import streetart.CFO.orlandostreetart.PreferenceManager;
 import streetart.CFO.orlandostreetart.R;
+import streetart.CFO.orlandostreetart.models.APIError;
 import streetart.CFO.orlandostreetart.models.Auth;
+import streetart.CFO.orlandostreetart.network.ErrorUtils;
 import streetart.CFO.orlandostreetart.views.FragmentViews.MainActivity;
 import streetart.CFO.orlandostreetart.views.FragmentViews.SettingsFragment;
 
@@ -58,20 +63,21 @@ public class Login extends AppCompatActivity {
         call.enqueue(new Callback<Auth>() {
             @Override
             public void onResponse(Call<Auth> call, Response<Auth> response) {
-                assert response.body() != null;
-                if (!response.body().getAuthToken().equals("") ||
-                response.body().getAuthToken() != null) {
+
+                if (response.isSuccessful()) {
                     preferenceManager.saveAuthBoolean(true);
                     Intent returnMain = new Intent(Login.this, MainActivity.class);
                     startActivity(returnMain);
                 } else {
-//                    todo: show login does not match
+//                  Show error message if incorrect info is entered.
+                    APIError error = ErrorUtils.parseError(response);
+                    Toast.makeText(Login.this, error.error(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Auth> call, Throwable t) {
-                Log.i(TAG, "onFailure: ");
+                Toast.makeText(Login.this, "Please check internet connection", Toast.LENGTH_SHORT).show();
             }
         });
     }
