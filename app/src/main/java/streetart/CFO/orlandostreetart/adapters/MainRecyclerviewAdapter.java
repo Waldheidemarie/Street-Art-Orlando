@@ -1,5 +1,6 @@
 package streetart.CFO.orlandostreetart.adapters;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import com.bumptech.glide.Glide;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import streetart.CFO.orlandostreetart.R;
+import streetart.CFO.orlandostreetart.models.Favorites;
 import streetart.CFO.orlandostreetart.models.GetSubmissions;
 import streetart.CFO.orlandostreetart.views.FragmentViews.ExploreFragment;
 
@@ -21,14 +23,14 @@ import streetart.CFO.orlandostreetart.views.FragmentViews.ExploreFragment;
 public class MainRecyclerviewAdapter extends RecyclerView.Adapter<MainRecyclerviewAdapter.ViewHolder> {
 
     private static final String TAG = "MainRecyclerviewAdapter";
-    private GetSubmissions itemsData;
-    private ExploreFragment context;
+    private Favorites itemsData;
+    private Context context;
     private OnArtClicked onArtClicked;
 
 
-    public MainRecyclerviewAdapter(ExploreFragment exploreFragment, OnArtClicked onArtClicked, GetSubmissions itemsData) {
+    public MainRecyclerviewAdapter(Context context, OnArtClicked onArtClicked, Favorites itemsData) {
         this.itemsData = itemsData;
-        this.context = exploreFragment;
+        this.context = context;
         this.onArtClicked = onArtClicked;
     }
 
@@ -36,7 +38,7 @@ public class MainRecyclerviewAdapter extends RecyclerView.Adapter<MainRecyclervi
     public void onBindViewHolder(@NonNull MainRecyclerviewAdapter.ViewHolder viewHolder, final int position) {
 //         Load Image
         Glide.with(context)
-                .load(itemsData.getSubmissions().get(position).getThumbUrl())
+                .load(itemsData.getSubmissions().get(position).getPhotoUrl())
                 .into(viewHolder.mImageView);
     }
 

@@ -1,7 +1,5 @@
 package streetart.CFO.orlandostreetart.views.FragmentViews;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,6 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import streetart.CFO.orlandostreetart.R;
 import streetart.CFO.orlandostreetart.adapters.MainRecyclerviewAdapter;
+import streetart.CFO.orlandostreetart.models.Favorites;
 import streetart.CFO.orlandostreetart.models.GetSubmissions;
 import streetart.CFO.orlandostreetart.presenters.FragmentPresenters.ExplorePresenter;
 import streetart.CFO.orlandostreetart.views.Details;
@@ -34,7 +33,7 @@ public class ExploreFragment extends Fragment implements MainRecyclerviewAdapter
 
     private static final String TAG = "ExploreFragment";
     ExplorePresenter rvPresenter = new ExplorePresenter(this);
-    GetSubmissions artData;
+    Favorites artData;
 
     public ExploreFragment() {
     }
@@ -50,17 +49,17 @@ public class ExploreFragment extends Fragment implements MainRecyclerviewAdapter
         return view;
     }
 
-    public void setupAdapter(GetSubmissions data) {
+    public void setupAdapter(Favorites data) {
         pbProgress.setVisibility(View.GONE);
         this.artData = data;
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        recyclerView.setAdapter(new MainRecyclerviewAdapter(this, this, data));
+        recyclerView.setAdapter(new MainRecyclerviewAdapter(getActivity(), this, data));
     }
 
     @Override
     public void OnArtClickedDetails(int position) {
         Intent showArtDetails = new Intent(getActivity(), Details.class);
-        showArtDetails.putExtra("artDetails", artData.getSubmissions().get(position));
+//        showArtDetails.putExtra("artDetails", artData.getSubmissions().get(position));
         startActivity(showArtDetails);
     }
 }
