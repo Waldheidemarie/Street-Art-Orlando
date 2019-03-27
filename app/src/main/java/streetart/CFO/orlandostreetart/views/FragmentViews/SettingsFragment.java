@@ -107,7 +107,7 @@ public class SettingsFragment extends Fragment {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // Continue with delete operation
-                        preferenceManager.saveAuthBoolean(false);
+                        preferenceManager.saveAuthBoolean(false, "");
                         Intent returnSettings = new Intent(getActivity(), MainActivity.class);
                         startActivity(returnSettings);
                         Toast.makeText(getActivity(), "You are now logged out", Toast.LENGTH_SHORT).show();

@@ -10,6 +10,7 @@ public class Constants {
 
     public static final GetNetworkData SERVICE = RetroClient.getRetrofitInstance().create(GetNetworkData.class);
 
-    public static final String AUTHTOKEN = "authToken";
-    public static final String SHARED_PREFS = "sharedPrefs";
+    static final String AUTH_TOKEN_BOOLEAN = "authTokenBoolean";
+    static final String AUTH_TOKEN_STRING = "authTokenString";
+    static final String SHARED_PREFS = "sharedPrefs";
 }

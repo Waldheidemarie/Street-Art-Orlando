@@ -1,14 +1,19 @@
 package streetart.CFO.orlandostreetart.network;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import streetart.CFO.orlandostreetart.BuildConfig;
 import streetart.CFO.orlandostreetart.models.Auth;
+import streetart.CFO.orlandostreetart.models.Favorite;
 import streetart.CFO.orlandostreetart.models.GetSubmissions;
 import streetart.CFO.orlandostreetart.models.PostUserRegister;
 
@@ -29,4 +34,8 @@ public interface GetNetworkData {
             @Field("email") String email,
             @Field("password") String password
     );
+
+    @POST("submissions/{id}/favorite")
+    Call<Favorite> postAddFavorite(@Header("Authorization") String authToken,
+            @Path("id") int submissionId);
 }

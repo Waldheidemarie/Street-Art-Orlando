@@ -23,21 +23,21 @@ public class LoginPresenter {
 
     private static final String TAG = "LoginPresenter";
     private Login loginView;
-    private PreferenceManager preferenceManager = new PreferenceManager(loginView);
 
     public LoginPresenter(Login login) {
         this.loginView = login;
     }
 
 
-    public void postLogin(String email, String password) {//
+    public void postLogin(String email, String password) {
+        final PreferenceManager preferenceManager = new PreferenceManager(loginView);
         Call<Auth> call = SERVICE.getUserAuthKey(email, password);
         call.enqueue(new Callback<Auth>() {
             @Override
             public void onResponse(Call<Auth> call, Response<Auth> response) {
 
                 if (response.isSuccessful()) {
-                    preferenceManager.saveAuthBoolean(true);
+                    preferenceManager.saveAuthBoolean(true, response.body().getAuthToken());
                     Intent returnMain = new Intent(loginView, MainActivity.class);
                     loginView.startActivity(returnMain);
                 } else {

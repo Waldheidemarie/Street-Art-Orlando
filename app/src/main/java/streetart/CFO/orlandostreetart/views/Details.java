@@ -43,6 +43,8 @@ public class Details extends AppCompatActivity{
     View viewDivider1;
     @BindView(R.id.divider2)
     View viewDivider2;
+    @BindView(R.id.imgFavorite)
+    ImageView imgFavorite;
 
     private static final String TAG = "Details";
     DetailsPresenter detailPresenter = new DetailsPresenter(this);
@@ -61,6 +63,8 @@ public class Details extends AppCompatActivity{
         mapFragment.getMapAsync(detailPresenter);
 
         detailPresenter.getPassedDetails();
+
+        detailPresenter.favoriteAddRemove(imgFavorite);
     }
 
     public void displayDetails(String photoUrl, String title, String artist, String description, String locationNotes) {

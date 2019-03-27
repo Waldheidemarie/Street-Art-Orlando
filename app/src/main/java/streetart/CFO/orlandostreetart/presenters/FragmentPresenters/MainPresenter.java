@@ -1,22 +1,15 @@
 package streetart.CFO.orlandostreetart.presenters.FragmentPresenters;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.MenuItem;
 
 import streetart.CFO.orlandostreetart.R;
 import streetart.CFO.orlandostreetart.views.FragmentViews.ExploreFragment;
 import streetart.CFO.orlandostreetart.views.FragmentViews.FavoritesFragment;
 import streetart.CFO.orlandostreetart.views.FragmentViews.SettingsFragment;
-
-import static android.content.Context.MODE_PRIVATE;
-import static streetart.CFO.orlandostreetart.Constants.AUTHTOKEN;
-import static streetart.CFO.orlandostreetart.Constants.SHARED_PREFS;
 
 /**
  * Created by Eric on 3/13/2019.

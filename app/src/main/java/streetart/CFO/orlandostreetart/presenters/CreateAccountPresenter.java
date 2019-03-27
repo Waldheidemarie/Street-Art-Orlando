@@ -6,8 +6,6 @@ import android.util.Patterns;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.io.IOException;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -17,7 +15,6 @@ import streetart.CFO.orlandostreetart.models.Auth;
 import streetart.CFO.orlandostreetart.models.PostUserRegister;
 import streetart.CFO.orlandostreetart.network.ErrorUtils;
 import streetart.CFO.orlandostreetart.views.CreateAccount;
-import streetart.CFO.orlandostreetart.views.Login;
 
 import static streetart.CFO.orlandostreetart.Constants.SERVICE;
 
@@ -125,7 +122,7 @@ public class CreateAccountPresenter {
                 assert response.body() != null;
                 Log.i(TAG, "onResponse: getAuthToken");
                 if (!response.body().getAuthToken().equals(""))
-                preferenceManager.saveAuthBoolean(true);
+                preferenceManager.saveAuthBoolean(true, response.body().getAuthToken());
             }
 
             @Override
