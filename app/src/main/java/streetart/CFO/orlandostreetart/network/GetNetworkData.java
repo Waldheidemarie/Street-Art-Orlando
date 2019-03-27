@@ -9,6 +9,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import streetart.CFO.orlandostreetart.models.Auth;
 import streetart.CFO.orlandostreetart.models.GetModel;
@@ -29,7 +30,7 @@ public interface GetNetworkData {
 
     @FormUrlEncoded
     @POST("authenticate")
-    Call<Auth> getUserAuthKey(
+    Call<Auth> postUserAuthKey(
             @Field("email") String email,
             @Field("password") String password);
 
@@ -38,10 +39,14 @@ public interface GetNetworkData {
                                    @Path("id") int submissionId);
 
     @DELETE("submissions/{id}/unfavorite")
-    Call<GetModel> postDeleteFavorite(@Header("Authorization") String API_KEY,
-                                   @Path("id") int submissionId);
+    Call<GetModel> deleteDeleteFavorite(@Header("Authorization") String API_KEY,
+                                        @Path("id") int submissionId);
 
     @GET("submissions/favorites")
     Call<GetModel> getFavorites(@Header("Authorization") String API_KEY);
 
+    @FormUrlEncoded
+    @PUT("password/update")
+    Call<Auth> putUpdatePassword(@Header("Authorization") String API_KEY,
+            @Field("password") String newPassword);
 }

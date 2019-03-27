@@ -6,7 +6,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.dynamic.IFragmentWrapper;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -19,9 +18,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import streetart.CFO.orlandostreetart.PreferenceManager;
 import streetart.CFO.orlandostreetart.R;
-import streetart.CFO.orlandostreetart.models.APIError;
 import streetart.CFO.orlandostreetart.models.GetModel;
-import streetart.CFO.orlandostreetart.network.ErrorUtils;
 import streetart.CFO.orlandostreetart.views.Details;
 
 import static streetart.CFO.orlandostreetart.Constants.SERVICE;
@@ -102,7 +99,7 @@ public class DetailsPresenter implements OnMapReadyCallback {
         mMap.addMarker(new MarkerOptions().position(seattle));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(seattle, 15));
     }
-
+//TODO: having issues with adding and deleting
     public void favoriteAddRemove(final ImageView imgFavorite) {
         final PreferenceManager preferenceManager = new PreferenceManager(detailView);
 
@@ -116,7 +113,7 @@ public class DetailsPresenter implements OnMapReadyCallback {
 //                  User is logged in
                     if (favorite){
                         favorite = false;
-                        Call<GetModel> call = SERVICE.postDeleteFavorite(preferenceManager.getAuthToken(), id);
+                        Call<GetModel> call = SERVICE.deleteDeleteFavorite(preferenceManager.getAuthToken(), id);
                         callFavorite(call);
                         detailView.favoriteIconFill(favorite);
                         Toast.makeText(detailView, "Added to favorites", Toast.LENGTH_SHORT).show();

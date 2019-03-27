@@ -114,20 +114,20 @@ public class CreateAccountPresenter {
     }
 
     private void getAuthToken() {
-        Call<Auth> call = SERVICE.getUserAuthKey(email, password);
+        Call<Auth> call = SERVICE.postUserAuthKey(email, password);
 
         call.enqueue(new Callback<Auth>() {
             @Override
             public void onResponse(Call<Auth> call, Response<Auth> response) {
                 assert response.body() != null;
-                Log.i(TAG, "onResponse: getAuthToken");
+                Log.i(TAG, "onResponse: GET_AUTH_TOKEN");
                 if (!response.body().getAuthToken().equals(""))
                 preferenceManager.saveAuthBoolean(true, response.body().getAuthToken());
             }
 
             @Override
             public void onFailure(Call<Auth> call, Throwable t) {
-                Log.i(TAG, "onFailure: getAuthToken");
+                Log.i(TAG, "onFailure: GET_AUTH_TOKEN");
             }
         });
     }

@@ -1,5 +1,7 @@
 package streetart.CFO.orlandostreetart;
 
+import android.content.Context;
+
 import streetart.CFO.orlandostreetart.network.GetNetworkData;
 import streetart.CFO.orlandostreetart.network.RetroClient;
 
@@ -13,4 +15,9 @@ public class Constants {
     static final String AUTH_TOKEN_BOOLEAN = "authTokenBoolean";
     static final String AUTH_TOKEN_STRING = "authTokenString";
     static final String SHARED_PREFS = "sharedPrefs";
+
+    public static String GET_AUTH_TOKEN(Context context) {
+        PreferenceManager preferenceManager = new PreferenceManager(context);
+        return preferenceManager.getAuthToken();
+    }
 }

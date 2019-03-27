@@ -1,6 +1,5 @@
 package streetart.CFO.orlandostreetart.presenters;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.widget.Toast;
 
@@ -31,7 +30,7 @@ public class LoginPresenter {
 
     public void postLogin(String email, String password) {
         final PreferenceManager preferenceManager = new PreferenceManager(loginView);
-        Call<Auth> call = SERVICE.getUserAuthKey(email, password);
+        Call<Auth> call = SERVICE.postUserAuthKey(email, password);
         call.enqueue(new Callback<Auth>() {
             @Override
             public void onResponse(Call<Auth> call, Response<Auth> response) {
