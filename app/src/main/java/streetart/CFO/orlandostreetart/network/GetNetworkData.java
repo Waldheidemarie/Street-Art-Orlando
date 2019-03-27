@@ -2,6 +2,7 @@ package streetart.CFO.orlandostreetart.network;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -34,6 +35,10 @@ public interface GetNetworkData {
 
     @POST("submissions/{id}/favorite")
     Call<GetModel> postAddFavorite(@Header("Authorization") String API_KEY,
+                                   @Path("id") int submissionId);
+
+    @DELETE("submissions/{id}/unfavorite")
+    Call<GetModel> postDeleteFavorite(@Header("Authorization") String API_KEY,
                                    @Path("id") int submissionId);
 
     @GET("submissions/favorites")

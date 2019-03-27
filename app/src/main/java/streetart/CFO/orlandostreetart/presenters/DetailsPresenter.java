@@ -65,7 +65,8 @@ public class DetailsPresenter implements OnMapReadyCallback {
            favorite = false;
 
 //       Display details in detailView
-        detailView.displayDetails(photoUrl, title, artist, description, locationNotes, favorite);
+        detailView.displayDetails(photoUrl, title, artist, description, locationNotes);
+        detailView.favoriteIconFill(favorite);
     }
 
     public void nullDisplay(TextView tvImageTitle, TextView tvArtistName,
@@ -102,7 +103,7 @@ public class DetailsPresenter implements OnMapReadyCallback {
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(seattle, 15));
     }
 
-    public void favoriteAddRemove(ImageView imgFavorite) {
+    public void favoriteAddRemove(final ImageView imgFavorite) {
         final PreferenceManager preferenceManager = new PreferenceManager(detailView);
 
         imgFavorite.setOnClickListener(new View.OnClickListener() {
@@ -113,25 +114,37 @@ public class DetailsPresenter implements OnMapReadyCallback {
                     Toast.makeText(detailView, R.string.login_required_to_save_favorites, Toast.LENGTH_SHORT).show();
                 } else {
 //                  User is logged in
-                    Call<GetModel> call = SERVICE.postAddFavorite(preferenceManager.getAuthToken(), id);
-                    call.enqueue(new Callback<GetModel>() {
-                        @Override
-                        public void onResponse(Call<GetModel> call, Response<GetModel> response) {
-                            if (response.isSuccessful()) {
-                                Log.i(TAG, "onResponse: " + response.code());
-                                Toast.makeText(detailView, "Added to favorites", Toast.LENGTH_SHORT).show();
-                            } else {
-                                APIError error = ErrorUtils.parseError(response);
-                                Toast.makeText(detailView, error.error(), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<GetModel> call, Throwable t) {
-                            Log.i(TAG, "onFailure: favoriteAdd/Remove");
-                        }
-                    });
+                    if (favorite){
+                        favorite = false;
+                        Call<GetModel> call = SERVICE.postDeleteFavorite(preferenceManager.getAuthToken(), id);
+                        callFavorite(call);
+                        detailView.favoriteIconFill(favorite);
+                        Toast.makeText(detailView, "Added to favorites", Toast.LENGTH_SHORT).show();
+                    }else{
+                        favorite = true;
+                        Call<GetModel> call = SERVICE.postAddFavorite(preferenceManager.getAuthToken(), id);
+                        callFavorite(call);
+                        detailView.favoriteIconFill(favorite);
+                        Toast.makeText(detailView, "Removed from favorites", Toast.LENGTH_SHORT).show();
+                    }
                 }
+            }
+        });
+    }
+
+    private void callFavorite(Call<GetModel> call) {
+        call.enqueue(new Callback<GetModel>() {
+            @Override
+            public void onResponse(Call<GetModel> call, Response<GetModel> response) {
+                if (response.isSuccessful()) {
+                    Log.i(TAG, "onResponse: " + response.code());
+                } else {
+                    Toast.makeText(detailView, "Error", Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<GetModel> call, Throwable t) {
+                Log.i(TAG, "onFailure: favoriteAdd/Remove");
             }
         });
     }
