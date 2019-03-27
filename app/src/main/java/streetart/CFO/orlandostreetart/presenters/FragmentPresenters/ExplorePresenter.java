@@ -5,8 +5,7 @@ import android.util.Log;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import streetart.CFO.orlandostreetart.models.Favorites;
-import streetart.CFO.orlandostreetart.models.GetSubmissions;
+import streetart.CFO.orlandostreetart.models.GetModel;
 import streetart.CFO.orlandostreetart.views.FragmentViews.ExploreFragment;
 
 import static streetart.CFO.orlandostreetart.Constants.SERVICE;
@@ -24,16 +23,16 @@ public class ExplorePresenter {
     }
 
     public void getData() {
-        Call<Favorites> call = SERVICE.getSubmissions();
-        call.enqueue(new Callback<Favorites>() {
+        Call<GetModel> call = SERVICE.getSubmissions();
+        call.enqueue(new Callback<GetModel>() {
             @Override
-            public void onResponse(Call<Favorites> call, Response<Favorites> response) {
+            public void onResponse(Call<GetModel> call, Response<GetModel> response) {
                 Log.i(TAG, "onResponse: " );
                 view.setupAdapter(response.body());
             }
 
             @Override
-            public void onFailure(Call<Favorites> call, Throwable t) {
+            public void onFailure(Call<GetModel> call, Throwable t) {
                 Log.i(TAG, "onFailure: ");
             }
         });

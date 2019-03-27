@@ -3,11 +3,14 @@ package streetart.CFO.orlandostreetart.models;
 /**
  * Created by Eric on 3/26/2019.
  */
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Favorites {
+public class GetModel {
 
     @SerializedName("submissions")
     @Expose
@@ -22,7 +25,7 @@ public class Favorites {
     }
 
 
-    public class Submission {
+    public static class Submission implements Parcelable {
 
         @SerializedName("id")
         @Expose
@@ -32,10 +35,10 @@ public class Favorites {
         private String status;
         @SerializedName("title")
         @Expose
-        private Object title;
+        private String title;
         @SerializedName("description")
         @Expose
-        private Object description;
+        private String description;
         @SerializedName("photo_url")
         @Expose
         private String photoUrl;
@@ -47,10 +50,10 @@ public class Favorites {
         private String tinyUrl;
         @SerializedName("artist")
         @Expose
-        private Object artist;
+        private String artist;
         @SerializedName("location_note")
         @Expose
-        private Object locationNote;
+        private String locationNote;
         @SerializedName("created_at")
         @Expose
         private String createdAt;
@@ -66,6 +69,48 @@ public class Favorites {
         @SerializedName("longitude")
         @Expose
         private Double longitude;
+
+        protected Submission(Parcel in) {
+            if (in.readByte() == 0) {
+                id = null;
+            } else {
+                id = in.readInt();
+            }
+            status = in.readString();
+            title = in.readString();
+            description = in.readString();
+            photoUrl = in.readString();
+            thumbUrl = in.readString();
+            tinyUrl = in.readString();
+            artist = in.readString();
+            locationNote = in.readString();
+            createdAt = in.readString();
+            nickname = in.readString();
+            byte tmpFavorite = in.readByte();
+            favorite = tmpFavorite == 0 ? null : tmpFavorite == 1;
+            if (in.readByte() == 0) {
+                latitude = null;
+            } else {
+                latitude = in.readDouble();
+            }
+            if (in.readByte() == 0) {
+                longitude = null;
+            } else {
+                longitude = in.readDouble();
+            }
+        }
+
+        public static final Creator<Submission> CREATOR = new Creator<Submission>() {
+            @Override
+            public Submission createFromParcel(Parcel in) {
+                return new Submission(in);
+            }
+
+            @Override
+            public Submission[] newArray(int size) {
+                return new Submission[size];
+            }
+        };
 
         public Integer getId() {
             return id;
@@ -83,19 +128,19 @@ public class Favorites {
             this.status = status;
         }
 
-        public Object getTitle() {
+        public String getTitle() {
             return title;
         }
 
-        public void setTitle(Object title) {
+        public void setTitle(String title) {
             this.title = title;
         }
 
-        public Object getDescription() {
+        public String getDescription() {
             return description;
         }
 
-        public void setDescription(Object description) {
+        public void setDescription(String description) {
             this.description = description;
         }
 
@@ -123,19 +168,19 @@ public class Favorites {
             this.tinyUrl = tinyUrl;
         }
 
-        public Object getArtist() {
+        public String getArtist() {
             return artist;
         }
 
-        public void setArtist(Object artist) {
+        public void setArtist(String artist) {
             this.artist = artist;
         }
 
-        public Object getLocationNote() {
+        public String getLocationNote() {
             return locationNote;
         }
 
-        public void setLocationNote(Object locationNote) {
+        public void setLocationNote(String locationNote) {
             this.locationNote = locationNote;
         }
 
@@ -179,5 +224,42 @@ public class Favorites {
             this.longitude = longitude;
         }
 
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            if (id == null) {
+                dest.writeByte((byte) 0);
+            } else {
+                dest.writeByte((byte) 1);
+                dest.writeInt(id);
+            }
+            dest.writeString(status);
+            dest.writeString(title);
+            dest.writeString(description);
+            dest.writeString(photoUrl);
+            dest.writeString(thumbUrl);
+            dest.writeString(tinyUrl);
+            dest.writeString(artist);
+            dest.writeString(locationNote);
+            dest.writeString(createdAt);
+            dest.writeString(nickname);
+            dest.writeByte((byte) (favorite == null ? 0 : favorite ? 1 : 2));
+            if (latitude == null) {
+                dest.writeByte((byte) 0);
+            } else {
+                dest.writeByte((byte) 1);
+                dest.writeDouble(latitude);
+            }
+            if (longitude == null) {
+                dest.writeByte((byte) 0);
+            } else {
+                dest.writeByte((byte) 1);
+                dest.writeDouble(longitude);
+            }
+        }
     }
 }

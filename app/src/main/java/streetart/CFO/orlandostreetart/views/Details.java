@@ -67,7 +67,7 @@ public class Details extends AppCompatActivity{
         detailPresenter.favoriteAddRemove(imgFavorite);
     }
 
-    public void displayDetails(String photoUrl, String title, String artist, String description, String locationNotes) {
+    public void displayDetails(String photoUrl, String title, String artist, String description, String locationNotes, boolean favorite) {
 //        Set text to fields
         tvImageTitle.setText(title);
         tvArtistName.setText(artist);
@@ -82,6 +82,11 @@ public class Details extends AppCompatActivity{
 //        Check if field is empty and set visibility to gone.
         detailPresenter.nullDisplay(tvImageTitle, tvArtistName, tvDescription,
                 tvLocationNotes, tvDescriptionLabel, viewDivider1, viewDivider2);
+
+//        Set favorite image
+        if (favorite){
+            imgFavorite.setImageResource(R.drawable.heart_selected_icon_3x);
+        }
     }
 
 }

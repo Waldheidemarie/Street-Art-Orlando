@@ -13,29 +13,27 @@ import com.bumptech.glide.Glide;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import streetart.CFO.orlandostreetart.R;
-import streetart.CFO.orlandostreetart.models.Favorites;
-import streetart.CFO.orlandostreetart.models.GetSubmissions;
-import streetart.CFO.orlandostreetart.views.FragmentViews.ExploreFragment;
+import streetart.CFO.orlandostreetart.models.GetModel;
 
 /**
  * Created by Eric on 3/14/2019.
  */
-public class MainRecyclerviewAdapter extends RecyclerView.Adapter<MainRecyclerviewAdapter.ViewHolder> {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
-    private static final String TAG = "MainRecyclerviewAdapter";
-    private Favorites itemsData;
+    private static final String TAG = "RecyclerViewAdapter";
+    private GetModel itemsData;
     private Context context;
     private OnArtClicked onArtClicked;
 
 
-    public MainRecyclerviewAdapter(Context context, OnArtClicked onArtClicked, Favorites itemsData) {
+    public RecyclerViewAdapter(Context context, OnArtClicked onArtClicked, GetModel itemsData) {
         this.itemsData = itemsData;
         this.context = context;
         this.onArtClicked = onArtClicked;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MainRecyclerviewAdapter.ViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder viewHolder, final int position) {
 //         Load Image
         Glide.with(context)
                 .load(itemsData.getSubmissions().get(position).getPhotoUrl())
@@ -70,7 +68,7 @@ public class MainRecyclerviewAdapter extends RecyclerView.Adapter<MainRecyclervi
 
     @NonNull
     @Override
-    public MainRecyclerviewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public RecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.image_layout, viewGroup, false);
         return new ViewHolder(view, onArtClicked) {
         };

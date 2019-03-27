@@ -15,16 +15,15 @@ import android.widget.ProgressBar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import streetart.CFO.orlandostreetart.R;
-import streetart.CFO.orlandostreetart.adapters.MainRecyclerviewAdapter;
-import streetart.CFO.orlandostreetart.models.Favorites;
-import streetart.CFO.orlandostreetart.models.GetSubmissions;
+import streetart.CFO.orlandostreetart.adapters.RecyclerViewAdapter;
+import streetart.CFO.orlandostreetart.models.GetModel;
 import streetart.CFO.orlandostreetart.presenters.FragmentPresenters.ExplorePresenter;
 import streetart.CFO.orlandostreetart.views.Details;
 
 /**
  * Created by Eric on 3/13/2019.
  */
-public class ExploreFragment extends Fragment implements MainRecyclerviewAdapter.OnArtClicked {
+public class ExploreFragment extends Fragment implements RecyclerViewAdapter.OnArtClicked {
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -33,7 +32,7 @@ public class ExploreFragment extends Fragment implements MainRecyclerviewAdapter
 
     private static final String TAG = "ExploreFragment";
     ExplorePresenter rvPresenter = new ExplorePresenter(this);
-    Favorites artData;
+    GetModel artData;
 
     public ExploreFragment() {
     }
@@ -49,17 +48,17 @@ public class ExploreFragment extends Fragment implements MainRecyclerviewAdapter
         return view;
     }
 
-    public void setupAdapter(Favorites data) {
+    public void setupAdapter(GetModel data) {
         pbProgress.setVisibility(View.GONE);
         this.artData = data;
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        recyclerView.setAdapter(new MainRecyclerviewAdapter(getActivity(), this, data));
+        recyclerView.setAdapter(new RecyclerViewAdapter(getActivity(), this, data));
     }
 
     @Override
     public void OnArtClickedDetails(int position) {
         Intent showArtDetails = new Intent(getActivity(), Details.class);
-//        showArtDetails.putExtra("artDetails", artData.getSubmissions().get(position));
+        showArtDetails.putExtra("artDetails", artData.getSubmissions().get(position));
         startActivity(showArtDetails);
     }
 }

@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.dynamic.IFragmentWrapper;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -17,10 +18,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import streetart.CFO.orlandostreetart.PreferenceManager;
+import streetart.CFO.orlandostreetart.R;
 import streetart.CFO.orlandostreetart.models.APIError;
-import streetart.CFO.orlandostreetart.models.Auth;
-import streetart.CFO.orlandostreetart.models.Favorite;
-import streetart.CFO.orlandostreetart.models.GetSubmissions;
+import streetart.CFO.orlandostreetart.models.GetModel;
 import streetart.CFO.orlandostreetart.network.ErrorUtils;
 import streetart.CFO.orlandostreetart.views.Details;
 
@@ -38,6 +38,7 @@ public class DetailsPresenter implements OnMapReadyCallback {
     private String locationNotes;
     private Double latitude;
     private Double longitude;
+    private boolean favorite;
 
     private static final String TAG = "DetailsPresenter";
     private Details detailView;
@@ -49,7 +50,7 @@ public class DetailsPresenter implements OnMapReadyCallback {
 
     public void getPassedDetails() {
 
-        GetSubmissions.Submission artDetails = detailView.getIntent().getParcelableExtra("artDetails");
+        GetModel.Submission artDetails = detailView.getIntent().getParcelableExtra("artDetails");
 
        String photoUrl = artDetails.getPhotoUrl();
        id = artDetails.getId();
@@ -57,12 +58,14 @@ public class DetailsPresenter implements OnMapReadyCallback {
        artist = artDetails.getArtist();
        description = artDetails.getDescription();
        locationNotes = artDetails.getLocationNote();
-       Boolean favorite = artDetails.getFavorite();
        latitude = artDetails.getLatitude();
        longitude = artDetails.getLongitude();
-//
-////       Display details in detailView
-        detailView.displayDetails(photoUrl, title, artist, description, locationNotes);
+
+       if (artDetails.getFavorite() == null)
+           favorite = false;
+
+//       Display details in detailView
+        detailView.displayDetails(photoUrl, title, artist, description, locationNotes, favorite);
     }
 
     public void nullDisplay(TextView tvImageTitle, TextView tvArtistName,
@@ -101,27 +104,34 @@ public class DetailsPresenter implements OnMapReadyCallback {
 
     public void favoriteAddRemove(ImageView imgFavorite) {
         final PreferenceManager preferenceManager = new PreferenceManager(detailView);
+
         imgFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "onClick: favoriteAdd" + id);
-                Call<Favorite> call = SERVICE.postAddFavorite(preferenceManager.getAuthToken(), id);
-                call.enqueue(new Callback<Favorite>() {
-                    @Override
-                    public void onResponse(Call<Favorite> call, Response<Favorite> response) {
-                        if (response.isSuccessful()){
-                            Log.i(TAG, "onResponse: " + response.code());
-                            Toast.makeText(detailView, "Added to favorites", Toast.LENGTH_SHORT).show();
-                        }else {
-                            APIError error = ErrorUtils.parseError(response);
-                            Toast.makeText(detailView, error.error(), Toast.LENGTH_SHORT).show();
+                if (!preferenceManager.checkUserAuth()) {
+//                    User is not logged in
+                    Toast.makeText(detailView, R.string.login_required_to_save_favorites, Toast.LENGTH_SHORT).show();
+                } else {
+//                  User is logged in
+                    Call<GetModel> call = SERVICE.postAddFavorite(preferenceManager.getAuthToken(), id);
+                    call.enqueue(new Callback<GetModel>() {
+                        @Override
+                        public void onResponse(Call<GetModel> call, Response<GetModel> response) {
+                            if (response.isSuccessful()) {
+                                Log.i(TAG, "onResponse: " + response.code());
+                                Toast.makeText(detailView, "Added to favorites", Toast.LENGTH_SHORT).show();
+                            } else {
+                                APIError error = ErrorUtils.parseError(response);
+                                Toast.makeText(detailView, error.error(), Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                    @Override
-                    public void onFailure(Call<Favorite> call, Throwable t) {
-                        Log.i(TAG, "onFailure: favoriteAdd/Remove");
-                    }
-                });
+
+                        @Override
+                        public void onFailure(Call<GetModel> call, Throwable t) {
+                            Log.i(TAG, "onFailure: favoriteAdd/Remove");
+                        }
+                    });
+                }
             }
         });
     }
