@@ -28,7 +28,7 @@ public class LoginPresenter {
     }
 
 
-    public void postLogin(String email, String password) {
+    public void postLogin(final String email, String password) {
         final PreferenceManager preferenceManager = new PreferenceManager(loginView);
         Call<Auth> call = SERVICE.postUserAuthKey(email, password);
         call.enqueue(new Callback<Auth>() {
@@ -36,7 +36,7 @@ public class LoginPresenter {
             public void onResponse(Call<Auth> call, Response<Auth> response) {
 
                 if (response.isSuccessful()) {
-                    preferenceManager.saveAuthBoolean(true, response.body().getAuthToken());
+                    preferenceManager.saveAuthBoolean(true, response.body().getAuthToken(), email);
                     Intent returnMain = new Intent(loginView, MainActivity.class);
                     loginView.startActivity(returnMain);
                 } else {

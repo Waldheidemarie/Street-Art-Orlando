@@ -25,4 +25,8 @@
     <string name="location">Location</string>
     <string name="login_required_to_save_favorites">Login required to save favorites.</string>
     <string name="logout">Logout</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="have_security_code">Have Security Code?</string>
+    <string name="send_security_code">Send Security Code</string>
+    <string name="new_password">New Password</string>
 </resources>

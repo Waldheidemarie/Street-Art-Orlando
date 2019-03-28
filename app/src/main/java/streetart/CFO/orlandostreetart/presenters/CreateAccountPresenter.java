@@ -122,7 +122,7 @@ public class CreateAccountPresenter {
                 assert response.body() != null;
                 Log.i(TAG, "onResponse: GET_AUTH_TOKEN");
                 if (!response.body().getAuthToken().equals(""))
-                preferenceManager.saveAuthBoolean(true, response.body().getAuthToken());
+                preferenceManager.saveAuthBoolean(true, response.body().getAuthToken(), email);
             }
 
             @Override

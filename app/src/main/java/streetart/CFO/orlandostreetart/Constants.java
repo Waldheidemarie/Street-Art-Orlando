@@ -14,6 +14,7 @@ public class Constants {
 
     static final String AUTH_TOKEN_BOOLEAN = "authTokenBoolean";
     static final String AUTH_TOKEN_STRING = "authTokenString";
+    static final String USER_EMAIL = "userEmail";
     static final String SHARED_PREFS = "sharedPrefs";
 
     public static String GET_AUTH_TOKEN(Context context) {

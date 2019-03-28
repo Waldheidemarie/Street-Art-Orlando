@@ -1,11 +1,13 @@
 package streetart.CFO.orlandostreetart.views;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,6 +25,8 @@ public class Login extends AppCompatActivity {
     EditText etPassword;
     @BindView(R.id.btnLogin)
     Button btnLogin;
+    @BindView(R.id.tvForgotPassword)
+    TextView tvForgotPassword;
 
     private static final String TAG = "Login";
     LoginPresenter loginPresenter = new LoginPresenter(this);
@@ -37,6 +41,14 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                loginPresenter.postLogin(etEmail.getText().toString(), etPassword.getText().toString());
+            }
+        });
+
+        tvForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent forgotPassword = new Intent(v.getContext(), ForgotPassword.class);
+                startActivity(forgotPassword);
             }
         });
     }
