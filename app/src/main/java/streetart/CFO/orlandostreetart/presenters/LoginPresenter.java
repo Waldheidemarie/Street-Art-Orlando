@@ -36,7 +36,7 @@ public class LoginPresenter {
             public void onResponse(Call<Auth> call, Response<Auth> response) {
 
                 if (response.isSuccessful()) {
-                    preferenceManager.saveAuthBoolean(true, response.body().getAuthToken(), email);
+                    preferenceManager.saveAuthBoolean(true, response.body().getAuthToken());
                     Intent returnMain = new Intent(loginView, MainActivity.class);
                     loginView.startActivity(returnMain);
                     Toast.makeText(loginView, "Logged In", Toast.LENGTH_SHORT).show();

@@ -23,12 +23,11 @@ public class PreferenceManager {
         this.context = context;
     }
 
-    public void saveAuthBoolean(Boolean authTokenBoolean, String authToken, String email) {
+    public void saveAuthBoolean(Boolean authTokenBoolean, String authToken) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putString(AUTH_TOKEN_STRING, authToken);
-        editor.putString(USER_EMAIL, email);
         editor.putBoolean(AUTH_TOKEN_BOOLEAN, authTokenBoolean);
 
         editor.apply();

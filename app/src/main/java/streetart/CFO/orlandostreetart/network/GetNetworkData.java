@@ -13,7 +13,6 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import streetart.CFO.orlandostreetart.models.Auth;
 import streetart.CFO.orlandostreetart.models.GetModel;
-import streetart.CFO.orlandostreetart.models.PostUserRegister;
 
 import static streetart.CFO.orlandostreetart.BuildConfig.API_KEY;
 
@@ -21,12 +20,16 @@ public interface GetNetworkData {
 
     @Headers({"Accept: application/json",
             "Content-Type: application/json",
-    "Authorization: " + API_KEY})
+            "Authorization: " + API_KEY})
     @GET("submissions?status=approved")
     Call<GetModel> getSubmissions();
 
+    @FormUrlEncoded
     @POST("users/register")
-    Call<PostUserRegister> postUserRegister(@Body PostUserRegister postRegister);
+    Call<Auth> postUserRegister(
+            @Field("nickname") String nickname,
+            @Field("email") String email,
+            @Field("password") String password);
 
     @FormUrlEncoded
     @POST("authenticate")
@@ -48,7 +51,7 @@ public interface GetNetworkData {
     @FormUrlEncoded
     @PUT("password/update")
     Call<Auth> putUpdatePassword(@Header("Authorization") String API_KEY,
-            @Field("password") String newPassword);
+                                 @Field("password") String newPassword);
 
     @FormUrlEncoded
     @POST("password/forgot")

@@ -1,5 +1,7 @@
 package streetart.CFO.orlandostreetart.presenters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
@@ -12,9 +14,9 @@ import retrofit2.Response;
 import streetart.CFO.orlandostreetart.PreferenceManager;
 import streetart.CFO.orlandostreetart.models.APIError;
 import streetart.CFO.orlandostreetart.models.Auth;
-import streetart.CFO.orlandostreetart.models.PostUserRegister;
 import streetart.CFO.orlandostreetart.network.ErrorUtils;
 import streetart.CFO.orlandostreetart.views.CreateAccount;
+import streetart.CFO.orlandostreetart.views.FragmentViews.MainActivity;
 
 import static streetart.CFO.orlandostreetart.Constants.SERVICE;
 
@@ -25,17 +27,17 @@ import static streetart.CFO.orlandostreetart.Constants.SERVICE;
 public class CreateAccountPresenter {
 
     private static final String TAG = "CreateAccountPresenter";
-    private CreateAccount createAccountView;
+    private Context context;
     private String email;
     private String emailConfirm;
     private String nickname;
     private String password;
 
-    private PreferenceManager preferenceManager = new PreferenceManager(null);
+    private PreferenceManager preferenceManager = new PreferenceManager(context);
 
 
-    public CreateAccountPresenter(CreateAccount createAccount) {
-        this.createAccountView = createAccount;
+    public CreateAccountPresenter(Context context) {
+        this.context = context;
     }
 
     public void getStringInputs(EditText etEmail, EditText etEmailConfirm, EditText etNickName, EditText etPassword) {
@@ -86,15 +88,14 @@ public class CreateAccountPresenter {
     }
 
     public void postRegisterUser() {
-        PostUserRegister userRegister = new PostUserRegister(nickname, email, password);
-        Call<PostUserRegister> call = SERVICE.postUserRegister(userRegister);
+        Call<Auth> call = SERVICE.postUserRegister(nickname, email, password);
 
-        call.enqueue(new Callback<PostUserRegister>() {
+        call.enqueue(new Callback<Auth>() {
             @Override
-            public void onResponse(Call<PostUserRegister> call, Response<PostUserRegister> response) {
+            public void onResponse(Call<Auth> call, Response<Auth> response) {
                 if (response.isSuccessful()) {
 //                    Added user successfully
-                    Toast.makeText(createAccountView, "Welcome " + response.body().getName(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Welcome!!", Toast.LENGTH_SHORT).show();
                     getAuthToken();
                 } else {
 //                    Error adding new user
@@ -105,8 +106,8 @@ public class CreateAccountPresenter {
             }
 
             @Override
-            public void onFailure(Call<PostUserRegister> call, Throwable t) {
-                Toast.makeText(createAccountView, "Error :(", Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<Auth> call, Throwable t) {
+                Toast.makeText(context, "Error :(", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "onFailure: ");
             }
         });
@@ -114,15 +115,18 @@ public class CreateAccountPresenter {
     }
 
     private void getAuthToken() {
+        final PreferenceManager preferenceManager = new PreferenceManager(context);
+
         Call<Auth> call = SERVICE.postUserAuthKey(email, password);
 
         call.enqueue(new Callback<Auth>() {
             @Override
             public void onResponse(Call<Auth> call, Response<Auth> response) {
                 assert response.body() != null;
-                Log.i(TAG, "onResponse: GET_AUTH_TOKEN");
                 if (!response.body().getAuthToken().equals(""))
-                preferenceManager.saveAuthBoolean(true, response.body().getAuthToken(), email);
+                preferenceManager.saveAuthBoolean(true, response.body().getAuthToken());
+                Intent returnHome = new Intent(context, MainActivity.class);
+                context.startActivity(returnHome);
             }
 
             @Override

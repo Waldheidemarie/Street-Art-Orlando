@@ -1,9 +1,6 @@
 package streetart.CFO.orlandostreetart.presenters;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.widget.Toast;
 
 import retrofit2.Call;
@@ -11,7 +8,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import streetart.CFO.orlandostreetart.models.Auth;
 import streetart.CFO.orlandostreetart.views.FragmentViews.MainActivity;
-import streetart.CFO.orlandostreetart.views.FragmentViews.SettingsFragment;
 import streetart.CFO.orlandostreetart.views.UpdatePassword;
 
 import static streetart.CFO.orlandostreetart.Constants.GET_AUTH_TOKEN;
