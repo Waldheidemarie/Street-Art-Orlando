@@ -50,9 +50,15 @@ public interface GetNetworkData {
     Call<Auth> putUpdatePassword(@Header("Authorization") String API_KEY,
             @Field("password") String newPassword);
 
-
     @FormUrlEncoded
     @POST("password/forgot")
     Call<Auth> postPasswordForget(
             @Field("email") String email);
+
+    @FormUrlEncoded
+    @POST("password/reset")
+    Call<Auth> postPasswordReset(
+            @Field("email") String email,
+            @Field("token") String token,
+            @Field("password") String password);
 }

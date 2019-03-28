@@ -39,6 +39,7 @@ public class LoginPresenter {
                     preferenceManager.saveAuthBoolean(true, response.body().getAuthToken(), email);
                     Intent returnMain = new Intent(loginView, MainActivity.class);
                     loginView.startActivity(returnMain);
+                    Toast.makeText(loginView, "Logged In", Toast.LENGTH_SHORT).show();
                 } else {
 //                  Show error message if incorrect info is entered.
                     APIError error = ErrorUtils.parseError(response);
