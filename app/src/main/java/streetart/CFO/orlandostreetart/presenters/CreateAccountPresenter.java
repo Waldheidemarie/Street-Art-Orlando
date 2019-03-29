@@ -15,7 +15,6 @@ import streetart.CFO.orlandostreetart.PreferenceManager;
 import streetart.CFO.orlandostreetart.models.APIError;
 import streetart.CFO.orlandostreetart.models.Auth;
 import streetart.CFO.orlandostreetart.network.ErrorUtils;
-import streetart.CFO.orlandostreetart.views.CreateAccount;
 import streetart.CFO.orlandostreetart.views.FragmentViews.MainActivity;
 
 import static streetart.CFO.orlandostreetart.Constants.SERVICE;
@@ -124,7 +123,7 @@ public class CreateAccountPresenter {
             public void onResponse(Call<Auth> call, Response<Auth> response) {
                 assert response.body() != null;
                 if (!response.body().getAuthToken().equals(""))
-                preferenceManager.saveAuthBoolean(true, response.body().getAuthToken());
+                preferenceManager.saveAuthBoolean(true, response.body().getAuthToken(), email);
                 Intent returnHome = new Intent(context, MainActivity.class);
                 context.startActivity(returnHome);
             }

@@ -63,14 +63,14 @@ public class ForgotPassword extends AppCompatActivity {
 
     private void haveSecurityCode(){
         etPasswordLayout.setVisibility(View.VISIBLE);
-        etEmail.setText(getIntent().getStringExtra("email"));
         etSecurityTokenLayout.setVisibility(View.VISIBLE);
+        etEmail.setVisibility(View.GONE);
         btnSendCode.setText(getText(R.string.update_password));
         tvHaveCode.setVisibility(View.INVISIBLE);
         btnSendCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                forgotPasswordPresenter.updatePassword(etEmail.getText().toString(), etSecurityToken.getText().toString(),
+                forgotPasswordPresenter.updatePassword(etSecurityToken.getText().toString(),
                         etPassword.getText().toString());
             }
         });

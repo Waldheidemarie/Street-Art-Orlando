@@ -1,5 +1,6 @@
 package streetart.CFO.orlandostreetart.views.FragmentViews;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,6 +20,7 @@ import streetart.CFO.orlandostreetart.R;
 import streetart.CFO.orlandostreetart.adapters.RecyclerViewAdapter;
 import streetart.CFO.orlandostreetart.models.GetModel;
 import streetart.CFO.orlandostreetart.presenters.FragmentPresenters.FavoritesPresenter;
+import streetart.CFO.orlandostreetart.views.Details;
 
 /**
  * Created by Eric on 3/13/2019.
@@ -75,9 +77,8 @@ public class FavoritesFragment extends Fragment implements RecyclerViewAdapter.O
 
     @Override
     public void OnArtClickedDetails(int position) {
-//        todo see details of favorite items
-//        Intent showArtDetails = new Intent(getActivity(), Details.class);
-//        showArtDetails.putExtra("artDetails", artData.getSubmissions().get(position));
-//        startActivity(showArtDetails);
+        Intent showArtDetails = new Intent(getActivity(), Details.class);
+        showArtDetails.putExtra("artDetails", artData.getSubmissions().get(position));
+        startActivity(showArtDetails);
     }
 }

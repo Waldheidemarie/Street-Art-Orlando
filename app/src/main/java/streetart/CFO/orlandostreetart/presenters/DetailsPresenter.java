@@ -58,8 +58,12 @@ public class DetailsPresenter implements OnMapReadyCallback {
        latitude = artDetails.getLatitude();
        longitude = artDetails.getLongitude();
 
-       if (artDetails.getFavorite() == null)
-           favorite = false;
+       if (artDetails.getFavorite() == null){
+           favorite = false;}
+           else{
+           favorite = artDetails.getFavorite();
+           detailView.favoriteIconFill(favorite);
+       }
 
 //       Display details in detailView
         detailView.displayDetails(photoUrl, title, artist, description, locationNotes);
@@ -116,13 +120,13 @@ public class DetailsPresenter implements OnMapReadyCallback {
                         Call<GetModel> call = SERVICE.deleteDeleteFavorite(preferenceManager.getAuthToken(), id);
                         callFavorite(call);
                         detailView.favoriteIconFill(favorite);
-                        Toast.makeText(detailView, "Added to favorites", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(detailView, "Removed from favorites", Toast.LENGTH_SHORT).show();
                     }else{
                         favorite = true;
                         Call<GetModel> call = SERVICE.postAddFavorite(preferenceManager.getAuthToken(), id);
                         callFavorite(call);
                         detailView.favoriteIconFill(favorite);
-                        Toast.makeText(detailView, "Removed from favorites", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(detailView, "Added to favorites", Toast.LENGTH_SHORT).show();
                     }
                 }
             }

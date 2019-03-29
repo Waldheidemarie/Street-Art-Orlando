@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import retrofit2.Call;
@@ -17,7 +16,6 @@ import streetart.CFO.orlandostreetart.models.Auth;
 import streetart.CFO.orlandostreetart.network.ErrorUtils;
 import streetart.CFO.orlandostreetart.views.ForgotPassword;
 import streetart.CFO.orlandostreetart.views.FragmentViews.MainActivity;
-import streetart.CFO.orlandostreetart.views.FragmentViews.SettingsFragment;
 
 import static streetart.CFO.orlandostreetart.Constants.SERVICE;
 
@@ -28,15 +26,13 @@ public class ForgotPasswordPresenter {
 
     private static final String TAG = "ForgotPasswordPresenter";
     private final Context context;
-    private String email;
 
     public ForgotPasswordPresenter(Context context) {
         this.context = context;
     }
 
 
-    public void sendSecurityCode(String email) {
-        this.email = email;
+    public void sendSecurityCode(final String email) {
         Call<Auth> call = SERVICE.postPasswordForget(email);
         call.enqueue(new Callback<Auth>() {
             @Override
@@ -44,6 +40,8 @@ public class ForgotPasswordPresenter {
 
                 if (response.isSuccessful()) {
                     Log.i(TAG, "onResponse: ");
+                    PreferenceManager preferenceManager = new PreferenceManager(context);
+                    preferenceManager.saveAuthBoolean(false,"",email);
                     codeSentAlert();
                 } else {
 //                  Show error message if incorrect info is entered.
@@ -68,7 +66,6 @@ public class ForgotPasswordPresenter {
                     public void onClick(DialogInterface dialog, int which) {
                         Intent haveKey = new Intent(context, ForgotPassword.class);
                         haveKey.putExtra("haveKeyBoolean", true);
-                        haveKey.putExtra("email", email);
                         context.startActivity(haveKey);
                     }
                 })
@@ -77,19 +74,16 @@ public class ForgotPasswordPresenter {
                 .show();
     }
 
-    public void updatePassword(String email, final String securityCode, String etNewPassword) {
-
-        Call<Auth> call = SERVICE.postPasswordReset(email, securityCode, etNewPassword);
+    public void updatePassword(final String securityCode, final String etNewPassword) {
+        PreferenceManager preferenceManager = new PreferenceManager(context);
+        Call<Auth> call = SERVICE.postPasswordReset(preferenceManager.getUserEmail(), securityCode, etNewPassword);
         call.enqueue(new Callback<Auth>() {
             @Override
             public void onResponse(Call<Auth> call, Response<Auth> response) {
                 if (response.isSuccessful()) {
-                    Log.i(TAG, "onResponse: ");
                     Toast.makeText(context, "Password Updated", Toast.LENGTH_SHORT).show();
-                    Intent settings = new Intent(context, MainActivity.class);
-                    context.startActivity(settings);
+                    getAuthToken(etNewPassword);
                 } else {
-                    Log.i(TAG, "onResponse: failed");
 //                  Show error message if incorrect info is entered.
                     APIError error = ErrorUtils.parseError(response);
                     Toast.makeText(context, error.error(), Toast.LENGTH_SHORT).show();
@@ -99,6 +93,28 @@ public class ForgotPasswordPresenter {
             @Override
             public void onFailure(Call<Auth> call, Throwable t) {
                 Toast.makeText(context, "Please check internet connection", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void getAuthToken(String etNewPassword) {
+        final PreferenceManager preferenceManager = new PreferenceManager(context);
+
+        Call<Auth> call = SERVICE.postUserAuthKey(preferenceManager.getUserEmail(), etNewPassword);
+
+        call.enqueue(new Callback<Auth>() {
+            @Override
+            public void onResponse(Call<Auth> call, Response<Auth> response) {
+                assert response.body() != null;
+                if (!response.body().getAuthToken().equals(""))
+                    preferenceManager.saveAuthBoolean(true, response.body().getAuthToken(), preferenceManager.getUserEmail());
+                Intent returnHome = new Intent(context, MainActivity.class);
+                context.startActivity(returnHome);
+            }
+
+            @Override
+            public void onFailure(Call<Auth> call, Throwable t) {
+                Log.i(TAG, "onFailure: GET_AUTH_TOKEN");
             }
         });
     }
