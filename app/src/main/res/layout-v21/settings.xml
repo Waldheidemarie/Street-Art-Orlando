@@ -45,7 +45,7 @@
                 style="@style/SettingsRightArrow"/>
 
         </RelativeLayout>
-<!--todo: hide create account message if user is auth-->
+
         <TextView
             android:id="@+id/text_create_account_message"
             android:layout_width="match_parent"

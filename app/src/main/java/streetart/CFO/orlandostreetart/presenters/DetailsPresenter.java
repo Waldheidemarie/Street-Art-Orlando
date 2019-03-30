@@ -35,6 +35,7 @@ public class DetailsPresenter implements OnMapReadyCallback {
     private String locationNotes;
     private Double latitude;
     private Double longitude;
+    private String submittedBy;
     private boolean favorite;
 
     private static final String TAG = "DetailsPresenter";
@@ -57,6 +58,7 @@ public class DetailsPresenter implements OnMapReadyCallback {
        locationNotes = artDetails.getLocationNote();
        latitude = artDetails.getLatitude();
        longitude = artDetails.getLongitude();
+       submittedBy = artDetails.getNickname();
 
        if (artDetails.getFavorite() == null){
            favorite = false;}
@@ -66,7 +68,7 @@ public class DetailsPresenter implements OnMapReadyCallback {
        }
 
 //       Display details in detailView
-        detailView.displayDetails(photoUrl, title, artist, description, locationNotes);
+        detailView.displayDetails(photoUrl, title, artist, description, locationNotes, submittedBy);
         detailView.favoriteIconFill(favorite);
     }
 

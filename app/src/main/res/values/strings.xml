@@ -30,4 +30,8 @@
     <string name="send_security_code">Send Security Code</string>
     <string name="new_password">New Password</string>
     <string name="security_code_xxxxxx">Security Code XXXXXX</string>
+    <string name="submitted_by">Submitted by:</string>
+    <string name="art_title_optional">Art Title (Optional)</string>
+    <string name="artist_name_optional">Artist name (Optional)</string>
+    <string name="location_notes_optional">Location Notes (Optional)</string>
 </resources>

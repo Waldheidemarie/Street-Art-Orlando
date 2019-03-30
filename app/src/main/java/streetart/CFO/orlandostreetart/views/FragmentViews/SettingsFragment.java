@@ -1,5 +1,6 @@
 package streetart.CFO.orlandostreetart.views.FragmentViews;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import butterknife.BindView;
@@ -20,6 +22,7 @@ import streetart.CFO.orlandostreetart.PreferenceManager;
 import streetart.CFO.orlandostreetart.R;
 import streetart.CFO.orlandostreetart.views.CreateAccount;
 import streetart.CFO.orlandostreetart.views.Login;
+import streetart.CFO.orlandostreetart.views.SubmitPhoto;
 import streetart.CFO.orlandostreetart.views.UpdatePassword;
 
 /**
@@ -35,6 +38,10 @@ public class SettingsFragment extends Fragment {
     Button btnLogInLogOut;
     @BindView(R.id.layout_update_password)
     RelativeLayout layUpdatePassword;
+    @BindView(R.id.text_create_account_message)
+    TextView tvCreateAccountMessage;
+    @BindView(R.id.button_submit_photo)
+    Button btnSubmitPhoto;
 
     private static final String TAG = "SettingsFragment";
 
@@ -74,10 +81,18 @@ public class SettingsFragment extends Fragment {
                 Intent login = new Intent(getActivity(), Login.class);
                 startActivity(login);
             }
+        }); 
+        
+        btnSubmitPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginToSubmitPhoto();
+            }
         });
     }
 
     private void userLoggedIn(final PreferenceManager preferenceManager){
+        tvCreateAccountMessage.setVisibility(View.INVISIBLE);
         btnCreateAccount.setVisibility(View.INVISIBLE);
         layUpdatePassword.setVisibility(View.VISIBLE);
         btnLogInLogOut.setText(R.string.logout);
@@ -95,6 +110,15 @@ public class SettingsFragment extends Fragment {
             public void onClick(View v) {
 //                Log out user.
                 logoutAlertDialog(preferenceManager);
+            }
+        });
+        
+        btnSubmitPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Go to photo submit activity
+                Intent submitPhoto = new Intent(getActivity(), SubmitPhoto.class);
+                startActivity(submitPhoto);
             }
         });
     }
@@ -117,6 +141,17 @@ public class SettingsFragment extends Fragment {
                 // A null listener allows the button to dismiss the dialog and take no further action.
                 .setNegativeButton(android.R.string.no, null)
                 .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
+    private void loginToSubmitPhoto(){
+        new AlertDialog.Builder(getActivity())
+                .setTitle("Login")
+                .setMessage("You must be logged in to submit photos.")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
                 .show();
     }
 }

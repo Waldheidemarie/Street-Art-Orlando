@@ -45,6 +45,8 @@ public class Details extends AppCompatActivity{
     View viewDivider2;
     @BindView(R.id.imgFavorite)
     ImageView imgFavorite;
+    @BindView(R.id.tvSubmittedBy)
+    TextView tvSubmittedBy;
 
     private static final String TAG = "Details";
     DetailsPresenter detailPresenter = new DetailsPresenter(this);
@@ -67,12 +69,15 @@ public class Details extends AppCompatActivity{
         detailPresenter.favoriteAddRemove(imgFavorite);
     }
 
-    public void displayDetails(String photoUrl, String title, String artist, String description, String locationNotes) {
+    public void displayDetails(String photoUrl, String title, String artist,
+                               String description, String locationNotes, String submittedBy) {
 //        Set text to fields
         tvImageTitle.setText(title);
         tvArtistName.setText(artist);
         tvDescription.setText(description);
         tvLocationNotes.setText(locationNotes);
+        String submittedByString = getString(R.string.submitted_by) + submittedBy;
+        tvSubmittedBy.setText(submittedByString);
 
 //        Load image
         Glide.with(this)
