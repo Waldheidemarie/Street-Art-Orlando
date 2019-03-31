@@ -81,6 +81,15 @@
                 style="@style/EditText"
                 android:hint="@string/location_notes_optional"/>
 
+            <View
+                android:id="@+id/divider3"
+                style="@style/DividerLine" />
+
+            <EditText
+                android:id="@+id/etDescription"
+                style="@style/EditText"
+                android:hint="@string/description_optional"/>
+
         </LinearLayout>
 
         <TextView

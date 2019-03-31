@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -34,11 +36,10 @@ public class SubmitPhotoPresenter extends Activity{
 //    Submission Create Parameters
     private String photo;
     private String title;
-    private String artsit;
+    private String artist;
+    private String description;
     private Double latitude;
-    private String latitudeString;
     private Double longitude;
-    private String longitudeString;
     private String location_note;
 
     public SubmitPhotoPresenter(Context context, SubmitPhoto submitPhoto) {
@@ -46,16 +47,15 @@ public class SubmitPhotoPresenter extends Activity{
         this.context = context;
     }
 
-    public void getArtInfo(String title, String artist, String location_note) {
+    public void getArtInfo(String title, String artist, String location_note, String description, double latitude, double longitude) {
         this.title = title;
-        this.artsit = artist;
+        this.artist = artist;
+        this.description = description;
         this.location_note = location_note;
+        this.latitude = latitude;
+        this.longitude = longitude;
 
-//        todo test
-        latitude = 0.0;
-        latitudeString = latitude.toString();
-        longitude = 1.0;
-        longitudeString = longitude.toString();
+//        todo test: missing photo
         photo = "data:image/jpeg;base64,starts/base/64/string/here";
         postSubmissionCreate();
     }
@@ -63,7 +63,7 @@ public class SubmitPhotoPresenter extends Activity{
     public void postSubmissionCreate() {
         final PreferenceManager preferenceManager = new PreferenceManager(context);
         Call<Auth> call = SERVICE.postSubmissionCreate(preferenceManager.getAuthToken(),
-                photo, title, artsit, latitudeString, longitudeString, location_note);
+                photo, title, artist, description ,latitude, longitude, location_note);
 
         call.enqueue(new Callback<Auth>() {
             @Override

@@ -1,11 +1,15 @@
 package streetart.CFO.orlandostreetart.views;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.StrictMode;
 import android.provider.MediaStore;
@@ -44,6 +48,8 @@ public class SubmitPhoto extends AppCompatActivity {
     EditText etArtist;
     @BindView(R.id.etLocationNotes)
     EditText etLocationNotes;
+    @BindView(R.id.etDescription)
+    EditText etDescription;
     @BindView(R.id.btnSubmitPhoto)
     Button btnSubmitPhoto;
     @BindView(R.id.imagePreview)
@@ -52,6 +58,8 @@ public class SubmitPhoto extends AppCompatActivity {
     private static final String TAG = "SubmitPhoto";
     private SubmitPhotoPresenter submitPhotoPresenter;
     Uri art;
+    double longitude;
+    double latitude;
 
     //    Camera Permissions
     private int PERMISSION_GALLERY = 1;
@@ -65,12 +73,21 @@ public class SubmitPhoto extends AppCompatActivity {
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
             android.Manifest.permission.CAMERA
     };
+    private String[] LOCATION_PERMISSIONS = {
+            android.Manifest.permission.ACCESS_FINE_LOCATION,
+            android.Manifest.permission.ACCESS_COARSE_LOCATION
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.submit_photo);
         ButterKnife.bind(this);
+
+        int PERMISSION_LOCATION = 3;
+        ActivityCompat.requestPermissions(SubmitPhoto.this,
+                LOCATION_PERMISSIONS,
+                PERMISSION_LOCATION);
 
         submitPhotoPresenter = new SubmitPhotoPresenter(this, this);
 
@@ -85,7 +102,7 @@ public class SubmitPhoto extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 submitPhotoPresenter.getArtInfo(etTitle.getText().toString(), etArtist.getText().toString(),
-                        etLocationNotes.getText().toString());
+                        etLocationNotes.getText().toString(), etDescription.getText().toString(), latitude, longitude);
             }
         });
     }
@@ -152,7 +169,25 @@ public class SubmitPhoto extends AppCompatActivity {
                     Toast.makeText(this, R.string.permission_not_granted, Toast.LENGTH_SHORT).show();
                 }
             }
-
+//            Location Permission
+            case 3: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                            ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        Toast.makeText(this, R.string.permission_not_granted, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    assert lm != null;
+                    Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    longitude = location.getLongitude();
+                    latitude = location.getLatitude();
+                } else {
+                    Log.i(TAG, "onRequestPermissionsResult: denied");
+                    Toast.makeText(this, R.string.permission_not_granted, Toast.LENGTH_SHORT).show();
+                }
+            }
         }
     }
 
@@ -160,7 +195,6 @@ public class SubmitPhoto extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
-//            if (data != null) {
                 art = data.getData();
                 displayPreviewArt();
             }
@@ -169,7 +203,9 @@ public class SubmitPhoto extends AppCompatActivity {
                 Log.i(TAG, "onActivityResult: " + art.toString());
                 displayPreviewArt();
             }
-//        }
+            if (requestCode == 3) {
+
+            }
     }
 
     public void displayPreviewArt(){

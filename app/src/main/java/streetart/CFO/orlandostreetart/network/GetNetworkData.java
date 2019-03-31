@@ -71,7 +71,8 @@ public interface GetNetworkData {
                                     @Field("photo") String photo,
                                     @Field("title") String title,
                                     @Field("artist") String artist,
-                                    @Field("latitude") String latitude,
-                                    @Field("longitude") String longitude,
+                                    @Field("description") String description,
+                                    @Field("latitude") Double latitude,
+                                    @Field("longitude") Double longitude,
                                     @Field("location_note") String location_note);
 }
