@@ -59,9 +59,19 @@ public interface GetNetworkData {
             @Field("email") String email);
 
     @FormUrlEncoded
-    @POST("password/reset")
+    @POST("submissions")
     Call<Auth> postPasswordReset(
             @Field("email") String email,
             @Field("token") String token,
             @Field("password") String password);
+
+    @FormUrlEncoded
+    @PUT("password/update")
+    Call<Auth> postSubmissionCreate(@Header("Authorization") String API_KEY,
+                                    @Field("photo") String photo,
+                                    @Field("title") String title,
+                                    @Field("artist") String artist,
+                                    @Field("latitude") String latitude,
+                                    @Field("longitude") String longitude,
+                                    @Field("location_note") String location_note);
 }
