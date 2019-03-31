@@ -59,14 +59,14 @@ public interface GetNetworkData {
             @Field("email") String email);
 
     @FormUrlEncoded
-    @POST("submissions")
+    @POST("password/update")
     Call<Auth> postPasswordReset(
             @Field("email") String email,
             @Field("token") String token,
             @Field("password") String password);
 
     @FormUrlEncoded
-    @PUT("password/update")
+    @POST("submissions")
     Call<Auth> postSubmissionCreate(@Header("Authorization") String API_KEY,
                                     @Field("photo") String photo,
                                     @Field("title") String title,

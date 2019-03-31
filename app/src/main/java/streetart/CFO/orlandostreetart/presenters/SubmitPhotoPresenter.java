@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.widget.Toast;
 
 import retrofit2.Call;
@@ -33,9 +34,11 @@ public class SubmitPhotoPresenter extends Activity{
 //    Submission Create Parameters
     private String photo;
     private String title;
-    private String artisit;
-    private String latitude;
-    private String longitude;
+    private String artsit;
+    private Double latitude;
+    private String latitudeString;
+    private Double longitude;
+    private String longitudeString;
     private String location_note;
 
     public SubmitPhotoPresenter(Context context, SubmitPhoto submitPhoto) {
@@ -44,13 +47,23 @@ public class SubmitPhotoPresenter extends Activity{
     }
 
     public void getArtInfo(String title, String artist, String location_note) {
+        this.title = title;
+        this.artsit = artist;
+        this.location_note = location_note;
 
+//        todo test
+        latitude = 0.0;
+        latitudeString = latitude.toString();
+        longitude = 1.0;
+        longitudeString = longitude.toString();
+        photo = "data:image/jpeg;base64,starts/base/64/string/here";
+        postSubmissionCreate();
     }
 
     public void postSubmissionCreate() {
         final PreferenceManager preferenceManager = new PreferenceManager(context);
         Call<Auth> call = SERVICE.postSubmissionCreate(preferenceManager.getAuthToken(),
-                photo, title, artisit, latitude, longitude, location_note);
+                photo, title, artsit, latitudeString, longitudeString, location_note);
 
         call.enqueue(new Callback<Auth>() {
             @Override
@@ -59,6 +72,8 @@ public class SubmitPhotoPresenter extends Activity{
                 if (response.isSuccessful()) {
                     Toast.makeText(context, "Art submitted", Toast.LENGTH_SHORT).show();
                 } else {
+                    assert response.errorBody() != null;
+                    Log.i(TAG, "onResponse: " + response.errorBody().toString());
 //                  Show error message if incorrect info is entered.
                     APIError error = ErrorUtils.parseError(response);
                     Toast.makeText(context, error.error(), Toast.LENGTH_SHORT).show();
