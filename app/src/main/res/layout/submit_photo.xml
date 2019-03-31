@@ -20,16 +20,17 @@
             android:layout_marginBottom="8dp"
             android:text="@string/photo"
             android:textAllCaps="true"
-            app:layout_constraintBottom_toTopOf="@id/imageView"
+            app:layout_constraintBottom_toTopOf="@id/imageUpload"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/imageUpload"
             android:layout_width="0dp"
             android:layout_height="250dp"
             android:scaleType="centerInside"
+            android:tint="@color/colorPrimary"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +43,7 @@
             android:layout_height="wrap_content"
             android:background="@color/White"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@id/imageView"
+            app:layout_constraintTop_toBottomOf="@id/imageUpload"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
@@ -93,6 +94,25 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvLocationLabel" />
+
+
+        <Button
+            android:id="@+id/btnSubmitPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/rounded_corners"
+            android:text="@string/submit_photo"
+            android:textAllCaps="false"
+            android:textColor="@color/White"
+            android:textSize="18sp"
+            android:layout_marginBottom="36dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mapViewFragment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 </ScrollView>
