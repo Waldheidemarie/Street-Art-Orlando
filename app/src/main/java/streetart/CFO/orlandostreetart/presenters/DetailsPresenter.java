@@ -100,10 +100,10 @@ public class DetailsPresenter implements OnMapReadyCallback {
         UiSettings uiSettings = mMap.getUiSettings();
         uiSettings.setZoomControlsEnabled(true);
 
-        //seattle coordinates
-        LatLng seattle = new LatLng(latitude, longitude);
-        mMap.addMarker(new MarkerOptions().position(seattle));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(seattle, 15));
+        //User coordinates
+        LatLng User = new LatLng(latitude, longitude);
+        mMap.addMarker(new MarkerOptions().position(User));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(User, 15));
     }
 //TODO: having issues with adding and deleting
     public void favoriteAddRemove(final ImageView imgFavorite) {

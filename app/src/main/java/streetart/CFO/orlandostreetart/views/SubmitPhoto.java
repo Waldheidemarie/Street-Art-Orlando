@@ -1,20 +1,10 @@
 package streetart.CFO.orlandostreetart.views;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.net.Uri;
-import android.os.StrictMode;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,13 +15,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,22 +44,7 @@ public class SubmitPhoto extends AppCompatActivity {
     double longitude;
     double latitude;
 
-    //    Camera Permissions
-    private int PERMISSION_GALLERY = 1;
-    private int PERMISSION_CAMERA = 2;
     String mCameraFileName;
-    private String[] GALLERY_PERMISSIONS = {
-            android.Manifest.permission.READ_EXTERNAL_STORAGE,
-            android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-    };
-    private String[] CAMERA_PERMISSIONS = {
-            android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            android.Manifest.permission.CAMERA
-    };
-    private String[] LOCATION_PERMISSIONS = {
-            android.Manifest.permission.ACCESS_FINE_LOCATION,
-            android.Manifest.permission.ACCESS_COARSE_LOCATION
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,12 +52,9 @@ public class SubmitPhoto extends AppCompatActivity {
         setContentView(R.layout.submit_photo);
         ButterKnife.bind(this);
 
-        int PERMISSION_LOCATION = 3;
-        ActivityCompat.requestPermissions(SubmitPhoto.this,
-                LOCATION_PERMISSIONS,
-                PERMISSION_LOCATION);
-
         submitPhotoPresenter = new SubmitPhotoPresenter(this, this);
+
+        submitPhotoPresenter.locationPermissions();
 
         imgImageUpload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,7 +67,8 @@ public class SubmitPhoto extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 submitPhotoPresenter.getArtInfo(etTitle.getText().toString(), etArtist.getText().toString(),
-                        etLocationNotes.getText().toString(), etDescription.getText().toString(), latitude, longitude);
+                        etLocationNotes.getText().toString(), etDescription.getText().toString(),
+                        latitude, longitude, art);
             }
         });
     }
@@ -117,13 +83,9 @@ public class SubmitPhoto extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int item) {
                 if (items[item].equals("Choose from Library")) {
-                    ActivityCompat.requestPermissions(SubmitPhoto.this,
-                            GALLERY_PERMISSIONS,
-                            PERMISSION_GALLERY);
+                    submitPhotoPresenter.galleryPermissions();
                 } else if (items[item].equals("Take Photo")) {
-                    ActivityCompat.requestPermissions(SubmitPhoto.this,
-                            CAMERA_PERMISSIONS,
-                            PERMISSION_CAMERA);
+                    submitPhotoPresenter.cameraPermissions();
                 } else if (items[item].equals("Cancel")) {
                     dialog.dismiss();
                 }
@@ -140,10 +102,7 @@ public class SubmitPhoto extends AppCompatActivity {
             case 1: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Intent intent = new Intent();
-                    intent.setType("image/*");
-                    intent.setAction(Intent.ACTION_GET_CONTENT);
-                    startActivityForResult(intent, 1);
+                    submitPhotoPresenter.galleryImage();
                 } else {
                     Toast.makeText(this, R.string.permission_not_granted, Toast.LENGTH_SHORT).show();
                 }
@@ -153,18 +112,7 @@ public class SubmitPhoto extends AppCompatActivity {
             case 2: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-                    StrictMode.setVmPolicy(builder.build());
-                    Intent intent = new Intent();
-                    intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-
-                    String outPath = getString(R.string.sd_card) + "photo.jpeg";
-                    File outFile = new File(outPath);
-
-                    mCameraFileName = outFile.toString();
-                    Uri outUri = Uri.fromFile(outFile);
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, outUri);
-                    startActivityForResult(intent, 2);
+                    submitPhotoPresenter.cameraImage();
                 } else {
                     Toast.makeText(this, R.string.permission_not_granted, Toast.LENGTH_SHORT).show();
                 }
@@ -173,16 +121,7 @@ public class SubmitPhoto extends AppCompatActivity {
             case 3: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                            ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                        Toast.makeText(this, R.string.permission_not_granted, Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    assert lm != null;
-                    Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                    longitude = location.getLongitude();
-                    latitude = location.getLatitude();
+                    submitPhotoPresenter.getLocation();
                 } else {
                     Log.i(TAG, "onRequestPermissionsResult: denied");
                     Toast.makeText(this, R.string.permission_not_granted, Toast.LENGTH_SHORT).show();
@@ -193,24 +132,21 @@ public class SubmitPhoto extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
-                art = data.getData();
-                displayPreviewArt();
-            }
-            if (requestCode == 2) {
-                art = Uri.fromFile(new File(mCameraFileName));
-                Log.i(TAG, "onActivityResult: " + art.toString());
-                displayPreviewArt();
-            }
-            if (requestCode == 3) {
-
-            }
+            art = data.getData();
+            displayPreviewArt(art);
+        }
+        if (requestCode == 2) {
+            Log.i(TAG, "onActivityResult: " + data.getData());
+//            art = data.getData();
+//            art = Uri.fromFile(new File(mCameraFileName));
+            displayPreviewArt(art);
+        }
     }
 
-    public void displayPreviewArt(){
-     imgImageUpload.setVisibility(View.GONE);
-     imagePreview.setVisibility(View.VISIBLE);
-     Glide.with(this).load(art).into(imagePreview);
- }
+    public void displayPreviewArt(Uri art) {
+        imgImageUpload.setVisibility(View.GONE);
+        imagePreview.setVisibility(View.VISIBLE);
+        Glide.with(this).load(art).into(imagePreview);
+    }
 }
