@@ -37,4 +37,6 @@
     <string name="permission_not_granted">Permission not granted</string>
     <string name="sd_card">sdcard/</string>
     <string name="description_optional">Description (Optional)</string>
+    <string name="logged_in_submit_photo">You must be logged in to submit photos.</string>
+    <string name="logged_in_your_photo">You must be logged in to view your photos.</string>
 </resources>

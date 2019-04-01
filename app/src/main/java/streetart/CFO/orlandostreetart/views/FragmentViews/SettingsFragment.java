@@ -22,6 +22,7 @@ import streetart.CFO.orlandostreetart.PreferenceManager;
 import streetart.CFO.orlandostreetart.R;
 import streetart.CFO.orlandostreetart.views.CreateAccount;
 import streetart.CFO.orlandostreetart.views.Login;
+import streetart.CFO.orlandostreetart.views.MyPhotos;
 import streetart.CFO.orlandostreetart.views.SubmitPhoto;
 import streetart.CFO.orlandostreetart.views.UpdatePassword;
 
@@ -42,6 +43,8 @@ public class SettingsFragment extends Fragment {
     TextView tvCreateAccountMessage;
     @BindView(R.id.button_submit_photo)
     Button btnSubmitPhoto;
+    @BindView(R.id.button_my_photos)
+    Button btnMyPhotos;
 
     private static final String TAG = "SettingsFragment";
 
@@ -86,7 +89,14 @@ public class SettingsFragment extends Fragment {
         btnSubmitPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loginToSubmitPhoto();
+                loginToSubmitPhoto(getString(R.string.logged_in_submit_photo));
+            }
+        });
+
+        btnMyPhotos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginToSubmitPhoto(getString(R.string.logged_in_your_photo));
             }
         });
     }
@@ -121,6 +131,15 @@ public class SettingsFragment extends Fragment {
                 startActivity(submitPhoto);
             }
         });
+
+        btnMyPhotos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Go to my Photos
+                Intent myPhotos = new Intent(getActivity(), MyPhotos.class);
+                startActivity(myPhotos);
+            }
+        });
     }
 
     private void logoutAlertDialog(final PreferenceManager preferenceManager){
@@ -144,10 +163,10 @@ public class SettingsFragment extends Fragment {
                 .show();
     }
 
-    private void loginToSubmitPhoto(){
+    private void loginToSubmitPhoto(String message){
         new AlertDialog.Builder(getActivity())
                 .setTitle("Login")
-                .setMessage("You must be logged in to submit photos.")
+                .setMessage(message)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                     }

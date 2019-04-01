@@ -48,6 +48,9 @@ public interface GetNetworkData {
     @GET("submissions/favorites")
     Call<GetModel> getFavorites(@Header("Authorization") String API_KEY);
 
+    @GET("submissions/mine")
+    Call<GetModel> getMyPhotos(@Header("Authorization") String API_KEY);
+
     @FormUrlEncoded
     @PUT("password/update")
     Call<Auth> putUpdatePassword(@Header("Authorization") String API_KEY,
