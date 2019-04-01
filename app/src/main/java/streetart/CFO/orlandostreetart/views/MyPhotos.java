@@ -3,6 +3,7 @@ package streetart.CFO.orlandostreetart.views;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -39,7 +40,7 @@ public class MyPhotos extends AppCompatActivity {
 
     public void setupAdapter(GetModel myPhotos) {
         progressBar.setVisibility(View.GONE);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new MyPhotosRecyclerViewAdapter(myPhotos));
     }
 }

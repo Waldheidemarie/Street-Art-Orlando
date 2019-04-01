@@ -1,6 +1,5 @@
 package streetart.CFO.orlandostreetart.adapters;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,8 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,17 +27,27 @@ public class MyPhotosRecyclerViewAdapter extends RecyclerView.Adapter<MyPhotosRe
 
     @Override
     public void onBindViewHolder(@NonNull MyPhotosRecyclerViewAdapter.ViewHolder viewHolder, final int position) {
+
+//        viewHolder.imgArtwork.setText(myPhotos.getSubmissions().get(position).getTitle());
         viewHolder.tvTitle.setText(myPhotos.getSubmissions().get(position).getTitle());
+        viewHolder.tvArtist.setText(myPhotos.getSubmissions().get(position).getArtist());
+        viewHolder.tvStatus.setText(myPhotos.getSubmissions().get(position).getStatus());
 
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
 //        Bind IDs
 
+        @BindView(R.id.imgArtwork)
+        ImageView imgArtwork;
         @BindView(R.id.tvTitle)
         TextView tvTitle;
+        @BindView(R.id.tvArtist)
+        TextView tvArtist;
+        @BindView(R.id.tvStatus)
+        TextView tvStatus;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
