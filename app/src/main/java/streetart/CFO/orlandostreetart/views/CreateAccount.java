@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import butterknife.BindView;
@@ -30,6 +31,10 @@ public class CreateAccount extends AppCompatActivity {
     EditText etNickName;
     @BindView(R.id.edit_password)
     EditText etPassword;
+    @BindView(R.id.switch_agree_terms)
+    Switch swAgreeTerms;
+    @BindView(R.id.button_agree_terms)
+    Button btnAgreeTerms;
 
     private static final String TAG = "CreateAccount";
     CreateAccountPresenter presenter = new CreateAccountPresenter(this);
@@ -46,7 +51,7 @@ public class CreateAccount extends AppCompatActivity {
 
                 presenter.getStringInputs(etEmail,etEmailConfirm,etNickName,etPassword);
 
-                if (presenter.checkForEmpty(etEmail,etEmailConfirm,etNickName,etPassword) &&
+                if (presenter.checkForEmpty(etEmail,etEmailConfirm,etNickName,etPassword,swAgreeTerms, btnAgreeTerms) &&
                 presenter.checkEmails(etEmail, etEmailConfirm)) {
 //              Do this if all fields are filled and emails are valid
                     presenter.postRegisterUser();

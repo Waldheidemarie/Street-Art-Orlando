@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import retrofit2.Call;
@@ -32,9 +34,6 @@ public class CreateAccountPresenter {
     private String nickname;
     private String password;
 
-    private PreferenceManager preferenceManager = new PreferenceManager(context);
-
-
     public CreateAccountPresenter(Context context) {
         this.context = context;
     }
@@ -46,8 +45,8 @@ public class CreateAccountPresenter {
         password = etPassword.getText().toString();
     }
 
-//    TODO: Check if the term and condition is true
-    public Boolean checkForEmpty(EditText etEmail, EditText etEmailConfirm, EditText etNickName, EditText etPassword) {
+    public Boolean checkForEmpty(EditText etEmail, EditText etEmailConfirm, EditText etNickName,
+                                 EditText etPassword, Switch swAgreeTerms, Button btnAgreeTerms) {
         if (email.equals("")) {
             etEmail.setError("No email entered");
             return false;
@@ -62,6 +61,10 @@ public class CreateAccountPresenter {
         }
         if (password.equals("")) {
             etPassword.setError("No password entered");
+            return false;
+        }
+        if (!swAgreeTerms.isChecked()) {
+            btnAgreeTerms.setError("Please switch on");
             return false;
         }
         return true;
