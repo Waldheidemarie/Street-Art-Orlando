@@ -34,6 +34,8 @@ public class MyPhotos extends AppCompatActivity {
         setContentView(R.layout.recyclerview);
         ButterKnife.bind(this);
 
+        setTitle(R.string.my_photos);
+
         myPhotosPresenter.getMyPhotos();
     }
 

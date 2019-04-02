@@ -42,6 +42,8 @@ public class ForgotPassword extends AppCompatActivity {
         setContentView(R.layout.forgot_password);
         ButterKnife.bind(this);
 
+        setTitle(R.string.forgot_password);
+
         btnSendCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

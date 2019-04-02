@@ -30,6 +30,8 @@ public class UpdatePassword extends AppCompatActivity {
         setContentView(R.layout.update_password);
         ButterKnife.bind(this);
 
+        setTitle(R.string.update_password);
+
         btnUpdatePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

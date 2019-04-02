@@ -50,7 +50,7 @@ public class MyPhotosRecyclerViewAdapter extends RecyclerView.Adapter<MyPhotosRe
             viewHolder.tvStatus.setTextColor(myPhotosView.getResources().getColor(R.color.red));
         }
         if (status.equals("approved")){
-            viewHolder.tvStatus.setTextColor(myPhotosView.getResources().getColor(R.color.green));
+            viewHolder.tvStatus.setTextColor(myPhotosView.getResources().getColor(R.color.Green));
         }
 
 

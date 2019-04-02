@@ -2,12 +2,15 @@ package streetart.CFO.orlandostreetart.views;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.SupportMapFragment;
 
 import butterknife.BindView;

@@ -5,9 +5,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
@@ -22,8 +24,12 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -103,22 +109,26 @@ public class SubmitPhotoPresenter implements OnMapReadyCallback {
         submitPhotoView.startActivityForResult(intent, 1);
     }
 
-//    todo: camera image not showing
+    //    todo: camera image not showing
     public void cameraImage() {
-        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-        StrictMode.setVmPolicy(builder.build());
-        Intent intent = new Intent();
-        intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        submitPhotoView.startActivityForResult(cameraIntent, 2);
 
-        String outPath = context.getString(R.string.sd_card) + "photo.jpeg";
-        File outFile = new File(outPath);
 
-        mCameraFileName = outFile.toString();
-        Uri art = Uri.parse(mCameraFileName);
-        Uri outUri = Uri.fromFile(outFile);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, art);
-
-        submitPhotoView.startActivityForResult(intent, 2);
+//        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+//        StrictMode.setVmPolicy(builder.build());
+//        Intent intent = new Intent();
+//        intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+//
+//        String outPath = context.getString(R.string.sd_card) + "photo.jpeg";
+//        File outFile = new File(outPath);
+//
+//        mCameraFileName = outFile.toString();
+//        Uri art = Uri.parse(mCameraFileName);
+////        Uri outUri = Uri.fromFile(outFile);
+//        intent.putExtra(MediaStore.EXTRA_OUTPUT, art);
+//
+//        submitPhotoView.startActivityForResult(intent, 2);
     }
 
     public void getLocation() {
@@ -193,4 +203,10 @@ public class SubmitPhotoPresenter implements OnMapReadyCallback {
         });
     }
 
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
 }

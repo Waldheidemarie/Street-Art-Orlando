@@ -3,6 +3,7 @@ package streetart.CFO.orlandostreetart.views;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -16,12 +17,16 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import java.io.File;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import streetart.CFO.orlandostreetart.R;
 import streetart.CFO.orlandostreetart.presenters.SubmitPhotoPresenter;
 
 public class SubmitPhoto extends AppCompatActivity {
+
+//    TODO: save info on rotation
 
     @BindView(R.id.imageUpload)
     ImageView imgImageUpload;
@@ -44,13 +49,13 @@ public class SubmitPhoto extends AppCompatActivity {
     double longitude;
     double latitude;
 
-    String mCameraFileName;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.submit_photo);
         ButterKnife.bind(this);
+
+        setTitle(R.string.submit_photo);
 
         submitPhotoPresenter = new SubmitPhotoPresenter(this, this);
 
@@ -132,16 +137,18 @@ public class SubmitPhoto extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1) {
+        if (requestCode == 1 && data != null) {
             art = data.getData();
             displayPreviewArt(art);
         }
         if (requestCode == 2) {
-            Log.i(TAG, "onActivityResult: " + data.getData());
-//            art = data.getData();
-//            art = Uri.fromFile(new File(mCameraFileName));
-            displayPreviewArt(art);
+//            displayPreviewArt(submitPhotoPresenter.getImageUri(this, (Bitmap) data.getExtras().get("data")));
+            Bitmap photo = (Bitmap) data.getExtras().get("data");
+            imgImageUpload.setVisibility(View.GONE);
+            imagePreview.setVisibility(View.VISIBLE);
+            Glide.with(this).load(photo).into(imagePreview);
         }
+
     }
 
     public void displayPreviewArt(Uri art) {

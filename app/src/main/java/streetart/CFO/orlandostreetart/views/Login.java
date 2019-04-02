@@ -37,6 +37,8 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.login);
         ButterKnife.bind(this);
 
+        setTitle(R.string.login);
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

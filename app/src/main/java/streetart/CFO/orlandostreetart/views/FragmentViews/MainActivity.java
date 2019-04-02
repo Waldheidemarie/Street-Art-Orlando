@@ -49,14 +49,17 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_explore:
                     fm.beginTransaction().replace(R.id.main_container, explore).commit();
+                    setTitle(R.string.explore);
                     active = explore;
                     return true;
                 case R.id.navigation_favorites:
                     fm.beginTransaction().replace(R.id.main_container, favorites).commit();
+                    setTitle(R.string.favorites);
                     active = favorites;
                     return true;
                 case R.id.navigation_settings:
                     fm.beginTransaction().replace(R.id.main_container, settings).commit();
+                    setTitle(R.string.settings);
                     active = settings;
                     return true;
             }

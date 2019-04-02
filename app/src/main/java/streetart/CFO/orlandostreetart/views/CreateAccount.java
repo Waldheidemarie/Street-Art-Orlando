@@ -45,6 +45,8 @@ public class CreateAccount extends AppCompatActivity {
         setContentView(R.layout.create_account);
         ButterKnife.bind(this);
 
+        setTitle(R.string.create_account);
+
         btnCreateAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
