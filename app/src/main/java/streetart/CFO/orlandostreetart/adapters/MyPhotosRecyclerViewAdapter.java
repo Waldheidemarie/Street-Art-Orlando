@@ -8,10 +8,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import streetart.CFO.orlandostreetart.R;
 import streetart.CFO.orlandostreetart.models.GetModel;
+import streetart.CFO.orlandostreetart.views.MyPhotos;
 
 /**
  * Created by Eric on 3/14/2019.
@@ -19,20 +22,42 @@ import streetart.CFO.orlandostreetart.models.GetModel;
 public class MyPhotosRecyclerViewAdapter extends RecyclerView.Adapter<MyPhotosRecyclerViewAdapter.ViewHolder> {
 
     private GetModel myPhotos;
+    private MyPhotos myPhotosView;
 
 
-    public MyPhotosRecyclerViewAdapter(GetModel myPhotos) {
+    public MyPhotosRecyclerViewAdapter(MyPhotos myPhotosView, GetModel myPhotos) {
+        this.myPhotosView = myPhotosView;
         this.myPhotos = myPhotos;
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyPhotosRecyclerViewAdapter.ViewHolder viewHolder, final int position) {
+//        Set Title
+        String title = myPhotos.getSubmissions().get(position).getTitle();
+        if (!title.equals(""))
+            viewHolder.tvTitle.setText(title);
 
-//        viewHolder.imgArtwork.setText(myPhotos.getSubmissions().get(position).getTitle());
-        viewHolder.tvTitle.setText(myPhotos.getSubmissions().get(position).getTitle());
-        viewHolder.tvArtist.setText(myPhotos.getSubmissions().get(position).getArtist());
-        viewHolder.tvStatus.setText(myPhotos.getSubmissions().get(position).getStatus());
+//        Set Artist
+        String artist = myPhotos.getSubmissions().get(position).getArtist();
+        if (!artist.equals(""))
+            viewHolder.tvArtist.setText(artist);
 
+//        Set Status
+        String status = myPhotos.getSubmissions().get(position).getStatus().toLowerCase();
+        String upperString = status.substring(0,1).toUpperCase() + status.substring(1);
+        viewHolder.tvStatus.setText(upperString);
+        if (status.equals("rejected")) {
+            viewHolder.tvStatus.setTextColor(myPhotosView.getResources().getColor(R.color.red));
+        }
+        if (status.equals("approved")){
+            viewHolder.tvStatus.setTextColor(myPhotosView.getResources().getColor(R.color.green));
+        }
+
+
+//         Load Image
+        Glide.with(myPhotosView)
+                .load(myPhotos.getSubmissions().get(position).getPhotoUrl())
+                .into(viewHolder.imgArtwork);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

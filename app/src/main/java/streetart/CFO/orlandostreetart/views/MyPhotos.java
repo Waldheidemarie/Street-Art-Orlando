@@ -41,6 +41,6 @@ public class MyPhotos extends AppCompatActivity {
     public void setupAdapter(GetModel myPhotos) {
         progressBar.setVisibility(View.GONE);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new MyPhotosRecyclerViewAdapter(myPhotos));
+        recyclerView.setAdapter(new MyPhotosRecyclerViewAdapter(this, myPhotos));
     }
 }

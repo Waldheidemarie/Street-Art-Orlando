@@ -9,5 +9,7 @@
     <color name="dark_text">#383737</color>
     <color name="black">#000000</color>
     <color name="White">#FFFFFF</color>
+    <color name="red">#FF5252</color>
+    <color name="green">#00E676</color>
 
 </resources>
