@@ -27,7 +27,6 @@ public class ExplorePresenter {
         call.enqueue(new Callback<GetModel>() {
             @Override
             public void onResponse(Call<GetModel> call, Response<GetModel> response) {
-                Log.i(TAG, "onResponse: " );
                 view.setupAdapter(response.body());
             }
 

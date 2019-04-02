@@ -28,7 +28,6 @@ public class FavoritesPresenter {
         call.enqueue(new Callback<GetModel>() {
             @Override
             public void onResponse(Call<GetModel> call, Response<GetModel> response) {
-                Log.i(TAG, "onResponse: " );
                 favoriteView.setupAdapter(response.body());
             }
 
