@@ -8,11 +8,15 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationManager;
+import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -27,6 +31,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -52,7 +57,6 @@ public class SubmitPhotoPresenter implements OnMapReadyCallback {
     private static final String TAG = "SubmitPhotoPresenter";
     private Context context;
     private SubmitPhoto submitPhotoView;
-    private String mCameraFileName;
 
     //    Submission Create Parameters
     private String photo;
@@ -162,27 +166,94 @@ public class SubmitPhotoPresenter implements OnMapReadyCallback {
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(User, 15));
     }
 
-    public void getArtInfo(String title, String artist, String location_note, String description,
-                           double latitude, double longitude, Uri art) {
+    public void getArtInfo(String title, String artist, String location_note, String description, Uri art) {
         this.title = title;
         this.artist = artist;
-        this.description = description;
-        this.location_note = location_note;
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this.description = "test desc";
+        this.location_note = "null loc";
 
 //        todo test: missing photo
-        photo = String.valueOf(art);
+//                Convert image into base 64
+//        convertBase64(art);
         postSubmissionCreate();
     }
 
+
+    public void convertBase64(Uri art){
+        try {
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(submitPhotoView.getContentResolver(), art);
+
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 25, outputStream);
+            byte[] byteArray = outputStream.toByteArray();
+
+            photo = "data:image/jpeg;base64," + Base64.encodeToString(byteArray, Base64.DEFAULT);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+//    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void getLongLat(Uri artUri){
+        InputStream in = null;
+        try {
+            in = submitPhotoView.getContentResolver().openInputStream(artUri);
+            ExifInterface exifInterface = new ExifInterface(in);
+            latitude = (double) convertRationalLatLonToFloat(exifInterface.getAttribute(ExifInterface.TAG_GPS_LATITUDE),
+                    exifInterface.getAttribute(ExifInterface.TAG_GPS_LATITUDE_REF));
+            longitude = (double) convertRationalLatLonToFloat(exifInterface.getAttribute
+                            (ExifInterface.TAG_GPS_LONGITUDE),
+                    exifInterface.getAttribute(ExifInterface.TAG_GPS_LONGITUDE_REF));
+//            Refresh map
+            SupportMapFragment mapFragment = (SupportMapFragment) submitPhotoView.getSupportFragmentManager()
+                    .findFragmentById(R.id.mapViewFragment);
+            mapFragment.getMapAsync(this);
+            // Now you can extract any Exif tag you want
+            // Assuming the image is a JPEG or supported raw format
+        } catch (IOException e) {
+            // Handle any errors
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException ignored) {}
+            }
+        }
+    }
+
+    private static float convertRationalLatLonToFloat(
+            String rationalString, String ref) {
+        try {
+            String [] parts = rationalString.split(",");
+            String [] pair;
+            pair = parts[0].split("/");
+            double degrees = Double.parseDouble(pair[0].trim())
+                    / Double.parseDouble(pair[1].trim());
+            pair = parts[1].split("/");
+            double minutes = Double.parseDouble(pair[0].trim())
+                    / Double.parseDouble(pair[1].trim());
+            pair = parts[2].split("/");
+            double seconds = Double.parseDouble(pair[0].trim())
+                    / Double.parseDouble(pair[1].trim());
+            double result = degrees + (minutes / 60.0) + (seconds / 3600.0);
+            if ((ref.equals("S") || ref.equals("W"))) {
+                return (float) -result;
+            }
+            return (float) result;
+        } catch (NumberFormatException e) {
+            // Some of the nubmers are not valid
+            throw new IllegalArgumentException();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            // Some of the rational does not follow the correct format
+            throw new IllegalArgumentException();
+        }
+    }
 
 
     private void postSubmissionCreate() {
         final PreferenceManager preferenceManager = new PreferenceManager(context);
         Call<Auth> call = SERVICE.postSubmissionCreate(preferenceManager.getAuthToken(),
                 photo, title, artist, description ,latitude, longitude, location_note);
-
         call.enqueue(new Callback<Auth>() {
             @Override
             public void onResponse(Call<Auth> call, Response<Auth> response) {
@@ -203,12 +274,5 @@ public class SubmitPhotoPresenter implements OnMapReadyCallback {
                 Toast.makeText(context, "Please check internet connection", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);
     }
 }
