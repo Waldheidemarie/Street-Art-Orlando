@@ -4,10 +4,16 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.Build;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +23,12 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -71,6 +82,9 @@ public class SubmitPhoto extends AppCompatActivity {
         btnSubmitPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                Convert image into base 64
+                convertBase64();
+
                 submitPhotoPresenter.getArtInfo(etTitle.getText().toString(), etArtist.getText().toString(),
                         etLocationNotes.getText().toString(), etDescription.getText().toString(),
                         latitude, longitude, art);
@@ -135,11 +149,13 @@ public class SubmitPhoto extends AppCompatActivity {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1 && data != null) {
             art = data.getData();
             displayPreviewArt(art);
+            getLongLat(art);
         }
         if (requestCode == 2) {
 //            displayPreviewArt(submitPhotoPresenter.getImageUri(this, (Bitmap) data.getExtras().get("data")));
@@ -148,7 +164,73 @@ public class SubmitPhoto extends AppCompatActivity {
             imagePreview.setVisibility(View.VISIBLE);
             Glide.with(this).load(photo).into(imagePreview);
         }
+    }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void getLongLat(Uri artUri){
+        InputStream in = null;
+        try {
+            in = getContentResolver().openInputStream(artUri);
+            ExifInterface exifInterface = new ExifInterface(in);
+            Log.i(TAG, "getLongLat: " + convertRationalLatLonToFloat(exifInterface.getAttribute(ExifInterface.TAG_GPS_LATITUDE),
+                    exifInterface.getAttribute(ExifInterface.TAG_GPS_LATITUDE_REF)));
+            Log.i(TAG, "getLongLat: " + convertRationalLatLonToFloat(exifInterface.getAttribute
+                            (ExifInterface.TAG_GPS_LONGITUDE),
+                    exifInterface.getAttribute(ExifInterface.TAG_GPS_LONGITUDE_REF)));
+            // Now you can extract any Exif tag you want
+            // Assuming the image is a JPEG or supported raw format
+        } catch (IOException e) {
+            // Handle any errors
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException ignored) {}
+            }
+        }
+        }
+
+    private static float convertRationalLatLonToFloat(
+            String rationalString, String ref) {
+        try {
+            String [] parts = rationalString.split(",");
+            String [] pair;
+            pair = parts[0].split("/");
+            double degrees = Double.parseDouble(pair[0].trim())
+                    / Double.parseDouble(pair[1].trim());
+            pair = parts[1].split("/");
+            double minutes = Double.parseDouble(pair[0].trim())
+                    / Double.parseDouble(pair[1].trim());
+            pair = parts[2].split("/");
+            double seconds = Double.parseDouble(pair[0].trim())
+                    / Double.parseDouble(pair[1].trim());
+            double result = degrees + (minutes / 60.0) + (seconds / 3600.0);
+            if ((ref.equals("S") || ref.equals("W"))) {
+                return (float) -result;
+            }
+            return (float) result;
+        } catch (NumberFormatException e) {
+            // Some of the nubmers are not valid
+            throw new IllegalArgumentException();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            // Some of the rational does not follow the correct format
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private void convertBase64(){
+        try {
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), art);
+
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+            byte[] byteArray = outputStream.toByteArray();
+
+            String encodedString = "data:image/jpeg;base64," + Base64.encodeToString(byteArray, Base64.DEFAULT);
+            art = Uri.parse(encodedString);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void displayPreviewArt(Uri art) {

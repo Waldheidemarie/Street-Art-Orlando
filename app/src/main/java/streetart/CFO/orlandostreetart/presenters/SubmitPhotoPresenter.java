@@ -176,6 +176,8 @@ public class SubmitPhotoPresenter implements OnMapReadyCallback {
         postSubmissionCreate();
     }
 
+
+
     private void postSubmissionCreate() {
         final PreferenceManager preferenceManager = new PreferenceManager(context);
         Call<Auth> call = SERVICE.postSubmissionCreate(preferenceManager.getAuthToken(),

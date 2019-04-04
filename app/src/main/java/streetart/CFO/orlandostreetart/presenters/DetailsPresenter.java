@@ -18,6 +18,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import streetart.CFO.orlandostreetart.PreferenceManager;
 import streetart.CFO.orlandostreetart.R;
+import streetart.CFO.orlandostreetart.adapters.RecyclerViewAdapter;
 import streetart.CFO.orlandostreetart.models.GetModel;
 import streetart.CFO.orlandostreetart.views.Details;
 
@@ -41,6 +42,7 @@ public class DetailsPresenter implements OnMapReadyCallback {
     private static final String TAG = "DetailsPresenter";
     private Details detailView;
     private GoogleMap mMap;
+    RecyclerViewAdapter adapter = new RecyclerViewAdapter(null,null,null);
 
     public DetailsPresenter(Details details) {
         this.detailView = details;
@@ -122,6 +124,7 @@ public class DetailsPresenter implements OnMapReadyCallback {
                         Call<GetModel> call = SERVICE.deleteDeleteFavorite(preferenceManager.getAuthToken(), id);
                         callFavorite(call);
                         detailView.favoriteIconFill(favorite);
+                        adapter.notifyDataSetChanged();
                         Toast.makeText(detailView, "Removed from favorites", Toast.LENGTH_SHORT).show();
                     }else{
                         favorite = true;
