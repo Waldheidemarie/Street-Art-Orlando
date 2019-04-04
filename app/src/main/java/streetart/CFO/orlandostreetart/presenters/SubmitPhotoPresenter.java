@@ -193,7 +193,7 @@ public class SubmitPhotoPresenter implements OnMapReadyCallback {
         }
     }
 
-//    @RequiresApi(api = Build.VERSION_CODES.N)
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void getLongLat(Uri artUri){
         InputStream in = null;
         try {

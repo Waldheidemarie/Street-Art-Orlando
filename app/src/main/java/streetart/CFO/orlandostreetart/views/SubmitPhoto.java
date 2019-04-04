@@ -142,13 +142,13 @@ public class SubmitPhoto extends AppCompatActivity {
         }
     }
 
-//    @RequiresApi(api = Build.VERSION_CODES.N)
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1 && data != null) {
             art = data.getData();
             displayPreviewArt(art);
-//            submitPhotoPresenter.getLongLat(art);
+            submitPhotoPresenter.getLongLat(art);
             submitPhotoPresenter.convertBase64(art);
         }
         if (requestCode == 2) {

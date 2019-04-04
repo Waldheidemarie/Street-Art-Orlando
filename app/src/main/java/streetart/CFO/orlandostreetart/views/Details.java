@@ -1,16 +1,17 @@
 package streetart.CFO.orlandostreetart.views;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 
 import butterknife.BindView;
@@ -46,6 +47,7 @@ public class Details extends AppCompatActivity{
 
     private static final String TAG = "Details";
     DetailsPresenter detailPresenter = new DetailsPresenter(this);
+    GoogleMap mMap;
 
     public Details() {
     }
@@ -59,6 +61,7 @@ public class Details extends AppCompatActivity{
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.mapViewFragment);
         mapFragment.getMapAsync(detailPresenter);
+
 
         detailPresenter.getPassedDetails();
 
