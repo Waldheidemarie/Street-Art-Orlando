@@ -3,16 +3,13 @@ package streetart.CFO.orlandostreetart.presenters;
 import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -103,31 +100,39 @@ public class DetailsPresenter implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        final ImageView mapPreview = detailView.findViewById(R.id.mapPreview);
-
-        mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
-            @Override
-            public void onMapLoaded() {
-                // Make a snapshot when map's done loading
-                mMap.snapshot(new GoogleMap.SnapshotReadyCallback() {
-                    @Override
-                    public void onSnapshotReady(Bitmap bitmap) {
-                        mapPreview.setImageBitmap(bitmap);
-
-                        // If map won't be used afterwards, remove it's views
-//              ((FrameLayout)findViewById(R.id.map)).removeAllViews();
-                    }
-                });
-            }
-        });
-        mMap.setIndoorEnabled(true);
-        UiSettings uiSettings = mMap.getUiSettings();
-        uiSettings.setZoomControlsEnabled(true);
-
         //User coordinates
         LatLng User = new LatLng(latitude, longitude);
         mMap.addMarker(new MarkerOptions().position(User));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(User, 15));
+        detailView.mapView.onResume();
+
+//        Log.i(TAG, "onMapReady: start");
+//        final ImageView mapPreview = detailView.findViewById(R.id.mapViewFragment);
+//
+//        mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+//            @Override
+//            public void onMapLoaded() {
+//                // Make a snapshot when map's done loading
+//                mMap.snapshot(new GoogleMap.SnapshotReadyCallback() {
+//                    @Override
+//                    public void onSnapshotReady(Bitmap bitmap) {
+//                        mapPreview.setImageBitmap(bitmap);
+//                        Log.i(TAG, "onSnapshotReady: ");
+//                        // If map won't be used afterwards, remove it's views
+////              ((FrameLayout)findViewById(R.id.map)).removeAllViews();
+//                    }
+//                });
+//            }
+//        });
+//        mMap.setIndoorEnabled(true);
+//        UiSettings uiSettings = mMap.getUiSettings();
+//        uiSettings.setZoomControlsEnabled(true);
+//
+        //User coordinates
+//        LatLng User = new LatLng(latitude, longitude);
+//        mMap.addMarker(new MarkerOptions().position(User));
+//        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(User, 18));
+//        Log.i(TAG, "onMapReady: ");
     }
     
 //TODO: having issues with adding and deleting

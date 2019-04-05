@@ -1,9 +1,13 @@
 package streetart.CFO.orlandostreetart.views;
 
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -12,7 +16,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
+import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.SupportMapFragment;
+
+import java.io.InputStream;
+import java.net.URL;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,10 +53,11 @@ public class Details extends AppCompatActivity{
     ImageView imgFavorite;
     @BindView(R.id.tvSubmittedBy)
     TextView tvSubmittedBy;
+    @BindView(R.id.mapViewFragment)
+    public MapView mapView;
 
     private static final String TAG = "Details";
     DetailsPresenter detailPresenter = new DetailsPresenter(this);
-    GoogleMap mMap;
 
     public Details() {
     }
@@ -58,10 +68,12 @@ public class Details extends AppCompatActivity{
         setContentView(R.layout.details);
         ButterKnife.bind(this);
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.mapViewFragment);
-        mapFragment.getMapAsync(detailPresenter);
+//        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+//                .findFragmentById(R.id.mapViewFragment);
+//        mapFragment.getMapAsync(detailPresenter);
 
+        mapView.onCreate(savedInstanceState);
+        mapView.getMapAsync(detailPresenter);
 
         detailPresenter.getPassedDetails();
 

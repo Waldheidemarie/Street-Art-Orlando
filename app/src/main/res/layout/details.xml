@@ -119,21 +119,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvDescription" />
 
-        <ImageView
-            android:id="@+id/mapPreview"
-            android:layout_width="0dp"
-            android:layout_height="243dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvLocationNotes" />
-
-        <fragment
+        <com.google.android.gms.maps.MapView
             android:id="@+id/mapViewFragment"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:name="com.google.android.gms.maps.MapFragment"
             android:layout_width="0dp"
             android:layout_height="243dp"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="48dp"
+            app:layout_constraintBottom_toTopOf="@+id/tvLocationNotes"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvLocationLabel" />
