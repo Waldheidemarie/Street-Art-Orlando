@@ -149,7 +149,6 @@ public class SubmitPhoto extends AppCompatActivity {
             art = data.getData();
             displayPreviewArt(art);
             submitPhotoPresenter.getLongLat(art);
-            submitPhotoPresenter.convertBase64(art);
         }
         if (requestCode == 2) {
 //            displayPreviewArt(submitPhotoPresenter.getImageUri(this, (Bitmap) data.getExtras().get("data")));

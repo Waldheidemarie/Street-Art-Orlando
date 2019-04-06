@@ -10,6 +10,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.os.StrictMode;
@@ -43,7 +44,9 @@ import streetart.CFO.orlandostreetart.PreferenceManager;
 import streetart.CFO.orlandostreetart.R;
 import streetart.CFO.orlandostreetart.models.APIError;
 import streetart.CFO.orlandostreetart.models.Auth;
+import streetart.CFO.orlandostreetart.models.GetModel;
 import streetart.CFO.orlandostreetart.network.ErrorUtils;
+import streetart.CFO.orlandostreetart.views.FragmentViews.MainActivity;
 import streetart.CFO.orlandostreetart.views.SubmitPhoto;
 
 import static android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE;
@@ -169,13 +172,25 @@ public class SubmitPhotoPresenter implements OnMapReadyCallback {
     public void getArtInfo(String title, String artist, String location_note, String description, Uri art) {
         this.title = title;
         this.artist = artist;
-        this.description = "test desc";
-        this.location_note = "null loc";
+        this.description = description;
+        this.location_note = location_note;
 
 //        todo test: missing photo
 //                Convert image into base 64
-//        convertBase64(art);
-        postSubmissionCreate();
+        convertBase64(art);
+        Log.i(TAG, "getArtInfo: convert");
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                //TODO your background code
+                Log.i(TAG, "run: ");
+                postSubmissionCreate();
+            }
+        });
+
+
+        Intent mainActivity = new Intent(submitPhotoView, MainActivity.class);
+        submitPhotoView.startActivity(mainActivity);
     }
 
 
