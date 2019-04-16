@@ -2,9 +2,12 @@ package streetart.CFO.orlandostreetart.views;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -58,6 +61,15 @@ public class CreateAccount extends AppCompatActivity {
 //              Do this if all fields are filled and emails are valid
                     presenter.postRegisterUser();
                 }
+            }
+        });
+
+
+        btnAgreeTerms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://streetartorlando.com/terms"));
+                startActivity(browserIntent);
             }
         });
     }

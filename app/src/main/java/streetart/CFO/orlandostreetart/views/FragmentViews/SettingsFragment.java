@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +47,12 @@ public class SettingsFragment extends Fragment {
     Button btnSubmitPhoto;
     @BindView(R.id.button_my_photos)
     Button btnMyPhotos;
+    @BindView(R.id.button_terms_conditions)
+    Button btnTermsConditions;
+    @BindView(R.id.button_privacy)
+    Button btnPrivacy;
+    @BindView(R.id.button_community_guidelines)
+    Button btnGuidelines;
 
     private static final String TAG = "SettingsFragment";
 
@@ -56,6 +64,8 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.settings, container, false);
         ButterKnife.bind(this, view);
+
+        termsAndConditions();
 
         PreferenceManager preferenceManager = new PreferenceManager(getActivity());
         if(preferenceManager.checkUserAuth()){
@@ -172,5 +182,31 @@ public class SettingsFragment extends Fragment {
                     }
                 })
                 .show();
+    }
+
+    private void termsAndConditions(){
+        btnTermsConditions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://streetartorlando.com/terms"));
+                startActivity(browserIntent);
+            }
+        });
+
+        btnPrivacy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://streetartorlando.com/privacy"));
+                startActivity(browserIntent);
+            }
+        });
+
+        btnGuidelines.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://streetartorlando.com/community-guidelines"));
+                startActivity(browserIntent);
+            }
+        });
     }
 }
