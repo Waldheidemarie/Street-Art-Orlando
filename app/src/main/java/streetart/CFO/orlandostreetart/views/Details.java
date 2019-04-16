@@ -1,5 +1,8 @@
 package streetart.CFO.orlandostreetart.views;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -80,7 +83,7 @@ public class Details extends AppCompatActivity{
         detailPresenter.favoriteAddRemove(imgFavorite);
     }
 
-    public void displayDetails(String photoUrl, String title, String artist,
+    public void displayDetails(final String photoUrl, String title, String artist,
                                String description, String locationNotes, String submittedBy) {
 //        Set text to fields
         tvImageTitle.setText(title);
@@ -94,6 +97,15 @@ public class Details extends AppCompatActivity{
         Glide.with(this)
                 .load(photoUrl)
                 .into(imgArtwork);
+
+        imgArtwork.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent fullScreen = new Intent(v.getContext(), FullImageView.class);
+                fullScreen.putExtra("photo", photoUrl);
+                startActivity(fullScreen);
+            }
+        });
 
 //        Check if field is empty and set visibility to gone.
         detailPresenter.nullDisplay(tvImageTitle, tvArtistName, tvDescription,
