@@ -214,11 +214,14 @@ public class SubmitPhotoPresenter implements OnMapReadyCallback {
         try {
             in = submitPhotoView.getContentResolver().openInputStream(artUri);
             ExifInterface exifInterface = new ExifInterface(in);
-            latitude = (double) convertRationalLatLonToFloat(exifInterface.getAttribute(ExifInterface.TAG_GPS_LATITUDE),
-                    exifInterface.getAttribute(ExifInterface.TAG_GPS_LATITUDE_REF));
-            longitude = (double) convertRationalLatLonToFloat(exifInterface.getAttribute
-                            (ExifInterface.TAG_GPS_LONGITUDE),
-                    exifInterface.getAttribute(ExifInterface.TAG_GPS_LONGITUDE_REF));
+
+            if (exifInterface.getAttribute(ExifInterface.TAG_GPS_LATITUDE) != null) {
+                latitude = (double) convertRationalLatLonToFloat(exifInterface.getAttribute(ExifInterface.TAG_GPS_LATITUDE),
+                        exifInterface.getAttribute(ExifInterface.TAG_GPS_LATITUDE_REF));
+                longitude = (double) convertRationalLatLonToFloat(exifInterface.getAttribute
+                                (ExifInterface.TAG_GPS_LONGITUDE),
+                        exifInterface.getAttribute(ExifInterface.TAG_GPS_LONGITUDE_REF));
+            }
 //            Refresh map
             SupportMapFragment mapFragment = (SupportMapFragment) submitPhotoView.getSupportFragmentManager()
                     .findFragmentById(R.id.mapViewFragment);
@@ -234,7 +237,7 @@ public class SubmitPhotoPresenter implements OnMapReadyCallback {
                 } catch (IOException ignored) {}
             }
         }
-    }
+        }
 
     private static float convertRationalLatLonToFloat(
             String rationalString, String ref) {
